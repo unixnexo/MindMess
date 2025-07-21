@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Migrations\\20250721160724_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MindMess\\Migrations\\20250721160724_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20250721160724_init.cs",
+              "DocumentMoniker": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Migrations\\20250721160724_init.cs",
+              "RelativeDocumentMoniker": "MindMess\\Migrations\\20250721160724_init.cs",
+              "ToolTip": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Migrations\\20250721160724_init.cs",
+              "RelativeToolTip": "MindMess\\Migrations\\20250721160724_init.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-21T16:07:24.414Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

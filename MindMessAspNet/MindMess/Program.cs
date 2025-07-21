@@ -1,11 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using MindMess.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// SQL server connection
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddCors();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -20,6 +28,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.MapControllers();
+
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.MapControllers();
 
 app.Run();
