@@ -1,0 +1,6 @@
+@MindMess_HostAddress = http://localhost:5050
+
+GET {{MindMess_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
