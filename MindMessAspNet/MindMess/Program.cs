@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MindMess.Data;
+using MindMess.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<EmailService>();
 
 // SQL server connection
 builder.Services.AddDbContext<AppDbContext>(options =>

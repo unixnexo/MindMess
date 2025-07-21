@@ -12,13 +12,15 @@ namespace MindMess.Controllers
     [Route("auth")]
     public class AuthController : ControllerBase
     {
+        private readonly EmailService _email;
         private readonly AppDbContext _db;
         private readonly IConfiguration _config;
 
-        public AuthController(AppDbContext db, IConfiguration config)
+        public AuthController(AppDbContext db, IConfiguration config, EmailService email)
         {
             _db = db;
             _config = config;
+            _email = email;
         }
 
         [HttpPost("request-magic-link")]
@@ -37,8 +39,9 @@ namespace MindMess.Controllers
             user.TokenExpiration = DateTime.UtcNow.AddMinutes(10);
             await _db.SaveChangesAsync();
 
-            // TODO: Email the link
-            Console.WriteLine($"Fake email to {dto.Email}: https://your-frontend.com/magic-login?token={token}");
+            // send email
+            var magicLink = $"?token={token}";
+            await _email.SendMagicLinkAsync(dto.Email, magicLink);
 
             return Ok(new { success = true });
         }
