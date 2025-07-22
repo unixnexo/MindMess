@@ -1,54 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|d:\\design and program development\\mindmess_no_paper_project_task_tracker_21_7_2025\\mindmessaspnet\\mindmess\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|solutionrelative:mindmess\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|d:\\design and program development\\mindmess_no_paper_project_task_tracker_21_7_2025\\mindmessaspnet\\mindmess\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|solutionrelative:mindmess\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProjectsController.cs",
-              "DocumentMoniker": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Controllers\\ProjectsController.cs",
-              "RelativeDocumentMoniker": "MindMess\\Controllers\\ProjectsController.cs",
-              "ToolTip": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Controllers\\ProjectsController.cs",
-              "RelativeToolTip": "MindMess\\Controllers\\ProjectsController.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAqwDsAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T09:32:35.018Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Program.cs",
-              "RelativeDocumentMoniker": "MindMess\\Program.cs",
-              "ToolTip": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Program.cs",
-              "RelativeToolTip": "MindMess\\Program.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAkwD0AAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T09:27:05.805Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

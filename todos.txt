@@ -1,0 +1,1 @@
+- send magic link only every 2 mins

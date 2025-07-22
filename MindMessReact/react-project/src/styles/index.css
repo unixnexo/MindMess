@@ -1,0 +1,27 @@
+@import url('./fonts.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, * {
+    font-family: "WinkyRough", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+button:disabled {
+    cursor: not-allowed !important;
+}
+
+@layer base {
+    .btn-default {
+        @apply bg-main-blue text-white hover:brightness-105 px-6 py-3 rounded-3xl;
+    }
+
+    .input-default {
+        @apply w-full px-3 py-1 border border-gray-300 rounded-lg text-base focus:outline-none focus:border-blue-500;
+    }
+}

@@ -11,7 +11,7 @@ namespace MindMess.Controllers
 {
     [AllowAnonymous]
     [ApiController]
-    [Route("auth")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly EmailService _email;
