@@ -59,7 +59,7 @@ namespace MindMess.Controllers
 
         private Guid GetUserId()
         {
-            var id = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            var id = User.FindFirstValue(JwtRegisteredClaimNames.Jti);
             return Guid.TryParse(id, out var guid) ? guid : throw new Exception("Invalid token");
         }
     }

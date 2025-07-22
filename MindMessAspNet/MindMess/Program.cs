@@ -45,6 +45,25 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
 });
 
 
+// Swagger configuration
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "MindMess", Version = "v1" });
+
+    // JWT auth
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "{your JWT token}"
+    });
+});
+
+
+
 
 var app = builder.Build();
 
