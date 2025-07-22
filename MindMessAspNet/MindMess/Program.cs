@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MindMess.Data;
 using MindMess.Helpers;
+using MindMess.Repositories.Drawings;
 using MindMess.Repositories.Project;
 using MindMess.Repositories.Tasks;
+using MindMess.Services.Drawings;
 using MindMess.Services.Project;
 using MindMess.Services.Tasks;
 using System.Text;
@@ -21,6 +23,9 @@ builder.Services.AddScoped<IProjectRepo, ProjectRepo>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITaskRepo, TaskRepo>();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IDrawingRepo, DrawingRepo>();
+builder.Services.AddScoped<IDrawingService, DrawingService>();
+
 
 
 // SQL server connection
