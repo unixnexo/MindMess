@@ -17,8 +17,9 @@ const LoginForm = forwardRef(({ onSuccess, onError, onLoadingChange }, ref) => {
       onSuccess();
       onLoadingChange?.(false);
     },
-    onError: () => {
-      onError();
+    onError: (err) => {
+      const msg = err?.response?.data?.error;
+      onError(msg);
       onLoadingChange?.(false);
     },
     onMutate: () => onLoadingChange?.(true),

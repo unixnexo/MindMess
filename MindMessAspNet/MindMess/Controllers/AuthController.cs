@@ -18,6 +18,9 @@ namespace MindMess.Controllers
         private readonly AppDbContext _db;
         private readonly IConfiguration _config;
 
+        private static readonly Dictionary<string, DateTime> _magicLinkCooldown = new();
+        private static readonly TimeSpan _cooldownDuration = TimeSpan.FromMinutes(2);
+
         public AuthController(AppDbContext db, IConfiguration config, EmailService email)
         {
             _db = db;
@@ -28,12 +31,25 @@ namespace MindMess.Controllers
         [HttpPost("request-magic-link")]
         public async Task<IActionResult> RequestMagicLink([FromBody] EmailDto dto)
         {
-            var token = JwtHelper.GenerateLoginToken(dto.Email, _config["JwtSecret"]!);
+            var email = dto.Email.Trim().ToLower();
 
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+            // Check cooldown
+            if (_magicLinkCooldown.TryGetValue(email, out var lastSent))
+            {
+                var sinceLast = DateTime.UtcNow - lastSent;
+                if (sinceLast < _cooldownDuration)
+                {
+                    var remaining = (int)(_cooldownDuration - sinceLast).TotalSeconds;
+                    return BadRequest(new { error = $"Please wait {remaining} seconds before requesting a new link." });
+                }
+            }
+
+            var token = JwtHelper.GenerateLoginToken(email, _config["JwtSecret"]!);
+
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
             {
-                user = new User { Email = dto.Email };
+                user = new User { Email = email };
                 _db.Users.Add(user);
             }
 
@@ -41,9 +57,12 @@ namespace MindMess.Controllers
             user.TokenExpiration = DateTime.UtcNow.AddMinutes(10);
             await _db.SaveChangesAsync();
 
-            // send email
+            // Send email
             var magicLink = $"?token={token}";
-            await _email.SendMagicLinkAsync(dto.Email, magicLink);
+            await _email.SendMagicLinkAsync(email, magicLink);
+
+            // Update cooldown
+            _magicLinkCooldown[email] = DateTime.UtcNow;
 
             return Ok(new { success = true });
         }
