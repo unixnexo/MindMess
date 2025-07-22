@@ -1,11 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MindMess.Data;
 using MindMess.Helpers;
 using MindMess.Repositories.Project;
+using MindMess.Repositories.Tasks;
 using MindMess.Services.Project;
+using MindMess.Services.Tasks;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<IProjectRepo, ProjectRepo>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<ITaskRepo, TaskRepo>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 
 // SQL server connection
