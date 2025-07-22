@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|d:\\design and program development\\mindmess_no_paper_project_task_tracker_21_7_2025\\mindmessaspnet\\mindmess\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|solutionrelative:mindmess\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\appsettings.json",
+              "RelativeDocumentMoniker": "MindMess\\appsettings.json",
+              "ToolTip": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\appsettings.json",
+              "RelativeToolTip": "MindMess\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-22T08:59:54.63Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

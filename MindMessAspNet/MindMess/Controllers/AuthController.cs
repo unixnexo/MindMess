@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MindMess.Data;
 using MindMess.Helpers;
@@ -8,6 +9,7 @@ using System.Security.Claims;
 
 namespace MindMess.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("auth")]
     public class AuthController : ControllerBase
