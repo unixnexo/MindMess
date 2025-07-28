@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const AnimatedSVG = ({ 
   svgContent, 
@@ -12,10 +12,11 @@ const AnimatedSVG = ({
   const svgRef = useRef(null);
 
   useEffect(() => {
+    if (!startAnimation) return;
+
     const svg = svgRef.current;
     if (!svg) return;
 
-    // Find all paths in the SVG
     const paths = svg.querySelectorAll('path');
 
     if (!startAnimation) {
@@ -24,8 +25,7 @@ const AnimatedSVG = ({
       });
       return;
     }
-    
-    // Set up all paths initially
+
     paths.forEach(path => {
       const length = path.getTotalLength();
       path.style.strokeDasharray = length;
@@ -54,8 +54,9 @@ const AnimatedSVG = ({
       };
 
       animatePath(0);
-    }, delay * 1000);
 
+    }, delay * 1000);
+      
     return () => clearTimeout(timer);
   }, [startAnimation, svgContent, duration, strokeColor, strokeWidth, delay]);
 
@@ -68,8 +69,9 @@ const AnimatedSVG = ({
           }
         }
       `}</style>
-      <div 
-        className={className}
+      <div
+        className={`${className} will-change-transform`}
+        style={{ transform: 'translateZ(0)' }}
         ref={svgRef}
         dangerouslySetInnerHTML={{ __html: svgContent }}
       />
@@ -78,3 +80,4 @@ const AnimatedSVG = ({
 };
 
 export default AnimatedSVG;
+

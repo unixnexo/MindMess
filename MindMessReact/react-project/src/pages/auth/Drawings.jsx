@@ -127,10 +127,10 @@ function Drawings({ startAnimation }) {
 </svg>
 `;
 
-    return (  
+    return (
         <>
-        <div className="absolute top-4 md:top-10 left-4 md:left-14">
-                <AnimatedSVG 
+            <div className="absolute top-4 md:top-10 left-4 md:left-14 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg1}
                     duration={0.2}
                     strokeWidth={6}
@@ -140,8 +140,8 @@ function Drawings({ startAnimation }) {
                 />
             </div>
 
-            <div className="absolute top-6 md:top-12 right-4 md:right-14">
-                <AnimatedSVG 
+            <div className="absolute top-6 md:top-12 right-4 md:right-14 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg2}
                     duration={0.2}
                     strokeWidth={6}
@@ -151,8 +151,8 @@ function Drawings({ startAnimation }) {
                 />
             </div>
 
-            <div className="absolute top-20 md:top-32 left-6 xs:left-16 md:left-24">
-                <AnimatedSVG 
+            <div className="absolute top-20 md:top-32 left-6 xs:left-16 md:left-24 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg3}
                     duration={0.2}
                     strokeWidth={6}
@@ -162,8 +162,8 @@ function Drawings({ startAnimation }) {
                 />
             </div>
 
-            <div className="absolute top-20 md:top-32 right-2 xs:right-16 md:right-32">
-                <AnimatedSVG 
+            <div className="absolute top-20 md:top-32 right-2 xs:right-16 md:right-32 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg4}
                     duration={0.2}
                     strokeWidth={6}
@@ -173,8 +173,8 @@ function Drawings({ startAnimation }) {
                 />
             </div>
 
-            <div className="absolute top-0 xs:top-4 md:top-8 right-16 md:right-36">
-                <AnimatedSVG 
+            <div className="absolute top-0 xs:top-4 md:top-8 right-16 md:right-36 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg5}
                     duration={0.2}
                     strokeWidth={6}
@@ -184,8 +184,8 @@ function Drawings({ startAnimation }) {
                 />
             </div>
 
-            <div className="absolute top-16 xs:top-6 md:top-10 left-28 md:left-52">
-                <AnimatedSVG 
+            <div className="absolute top-16 xs:top-6 md:top-10 left-28 md:left-52 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg6}
                     duration={0.2}
                     strokeWidth={6}
@@ -195,8 +195,8 @@ function Drawings({ startAnimation }) {
                 />
             </div>
 
-            <div className="absolute top-20 xs:top-12 md:top-36 left-48 xs:left-40 md:left-48">
-                <AnimatedSVG 
+            <div className="absolute top-20 xs:top-12 md:top-36 left-48 xs:left-40 md:left-48 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg7}
                     duration={0.2}
                     strokeWidth={6}
@@ -206,8 +206,8 @@ function Drawings({ startAnimation }) {
                 />
             </div>
 
-            <div className="absolute top-4 xs:top-8 md:top-20 right-26 xs:right-32 md:right-64">
-                <AnimatedSVG 
+            <div className="absolute top-4 xs:top-8 md:top-20 right-26 xs:right-32 md:right-64 z-[-1] pointer-events-none">
+                <AnimatedSVG
                     svgContent={svg8}
                     duration={0.2}
                     strokeWidth={6}
