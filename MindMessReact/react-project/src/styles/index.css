@@ -12,6 +12,13 @@ html, body, * {
     font-display: swap;
 }
 
+:root, body, html {
+    overflow-y: hidden !important;
+    max-width: 1600px !important;
+    margin: 0 auto;
+    position: relative;
+}
+
 button:disabled {
     cursor: not-allowed !important;
 }

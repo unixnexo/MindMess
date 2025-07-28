@@ -3,9 +3,11 @@ import React, { useEffect, useRef } from 'react';
 const AnimatedSVG = ({ 
   svgContent, 
   duration = 1, 
-  strokeColor = '#00ff88', 
+  strokeColor = 'black', 
   strokeWidth = 1,
-  className = ''
+  className = '',
+  startAnimation = true,
+  delay = 0
 }) => {
   const svgRef = useRef(null);
 
@@ -15,6 +17,13 @@ const AnimatedSVG = ({
 
     // Find all paths in the SVG
     const paths = svg.querySelectorAll('path');
+
+    if (!startAnimation) {
+      paths.forEach(path => {
+        path.style.opacity = '0';
+      });
+      return;
+    }
     
     // Set up all paths initially
     paths.forEach(path => {
@@ -28,25 +37,27 @@ const AnimatedSVG = ({
       path.style.strokeLinejoin = 'round';
     });
 
-    // Animate paths sequentially
-    const animatePath = (index) => {
-      if (index >= paths.length) return;
-      
-      const path = paths[index];
-      path.style.animation = `drawPath ${duration}s ease-in-out forwards`;
-      
-      // Listen for animation end
-      const handleAnimationEnd = () => {
-        path.removeEventListener('animationend', handleAnimationEnd);
-        animatePath(index + 1); // Start next path
-      };
-      
-      path.addEventListener('animationend', handleAnimationEnd);
-    };
+    // Start animation after delay
+    const timer = setTimeout(() => {
+      const animatePath = (index) => {
+        if (index >= paths.length) return;
 
-    // Start with first path
-    animatePath(0);
-  }, [svgContent, duration, strokeColor, strokeWidth]);
+        const path = paths[index];
+        path.style.animation = `drawPath ${duration}s ease-in-out forwards`;
+
+        const handleAnimationEnd = () => {
+          path.removeEventListener('animationend', handleAnimationEnd);
+          animatePath(index + 1);
+        };
+
+        path.addEventListener('animationend', handleAnimationEnd);
+      };
+
+      animatePath(0);
+    }, delay * 1000);
+
+    return () => clearTimeout(timer);
+  }, [startAnimation, svgContent, duration, strokeColor, strokeWidth, delay]);
 
   return (
     <>
