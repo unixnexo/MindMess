@@ -81,8 +81,7 @@ namespace MindMess.Controllers
                 return Unauthorized();
 
             // Final user session token
-            //var sessionToken = JwtHelper.GenerateLoginToken(user.Email, _config["JwtSecret"]!, 60 * 24 * 30); // 30 days
-            var sessionToken = JwtHelper.GenerateLoginToken(user.Email, _config["JwtSecret"]!, 30); // 30 min
+            var sessionToken = JwtHelper.GenerateLoginToken(user.Email, _config["JwtSecret"]!, 60 * 24 * 30); // 30 days
 
             return Ok(new { token = sessionToken });
         }
