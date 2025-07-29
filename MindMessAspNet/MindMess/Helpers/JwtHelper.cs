@@ -7,7 +7,7 @@ namespace MindMess.Helpers
 {
     public static class JwtHelper
     {
-        public static string GenerateLoginToken(string email, string secret, int minutesValid = 10)
+        public static string GenerateLoginToken(string email, string secret, int minutesValid = 30)
         {
             var claims = new[]
             {
