@@ -58,7 +58,7 @@ namespace MindMess.Controllers
             await _db.SaveChangesAsync();
 
             // Send email
-            var magicLink = $"?token={token}";
+            var magicLink = $"http://localhost:5173/auth/verify?token={token}";
             await _email.SendMagicLinkAsync(email, magicLink);
 
             // Update cooldown
@@ -67,8 +67,8 @@ namespace MindMess.Controllers
             return Ok(new { success = true });
         }
 
-        [HttpGet("validate-token")]
-        public async Task<IActionResult> ValidateToken([FromQuery] string token)
+        [HttpPost("validate-token")]
+        public async Task<IActionResult> ValidateToken([FromBody] string token)
         {
             var claims = JwtHelper.Validate(token, _config["JwtSecret"]!);
             if (claims == null) return Unauthorized();

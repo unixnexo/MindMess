@@ -2,16 +2,39 @@ import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import AuthPage from '../pages/auth/AuthPage';
 import Layout from "../components/layout/Layout";
+import VerifyPage from '../features/auth/VerifyPage';
+import ProtectedRoute  from '../features/auth/ProtectedRoute';
+import GuestRoute  from '../features/auth/GuestRoute';
 
 export const router = createBrowserRouter([
   {
     path: '/app',
-    element: <Layout />,
+    element: (
+    <ProtectedRoute>
+      <Layout />
+    </ProtectedRoute>
+    ),
     children: [
-      { path: '/app/home', element: <Home /> }
+      { path: 'home', element: <Home /> }
     ]
   },
-  { path: '/', element: <AuthPage /> },
+  { 
+    path: '/', 
+    element: (
+    <GuestRoute>
+      <AuthPage />
+    </GuestRoute>
+    )
+
+  },
+  { 
+    path: '/auth/verify', 
+    element: (
+    <GuestRoute>
+      <VerifyPage />
+    </GuestRoute>
+    )
+  },
   {
     path: '*',
     // element: <NotFound />

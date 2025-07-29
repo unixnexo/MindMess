@@ -5,6 +5,6 @@ export const requestMagicLink = async (email) => {
 };
 
 export const verifyMagicToken = async (token) => {
-  const res = await api.post('/auth/validate-token', { token });
+  const res = await api.post('/auth/validate-token', token);
   return res.data;
 };
