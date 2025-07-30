@@ -24,7 +24,7 @@ const VerifyPage = () => {
         navigate('/app/home'); // redirect to homepage
       })
       .catch((err) => {
-        setError(err?.error || 'Verification failed');
+        setError(err?.error || 'Verification failed, request a new link!');
       });
   }, []);
 
@@ -33,7 +33,7 @@ const VerifyPage = () => {
       {error ? (
         <div className='text-center space-y-5'>
           <img width="150" src="/useBrain.webp" alt="meme picture" />
-          <p className="text-red-500">{error}</p>
+          <p className="text-red">{error}</p>
         </div>
       ) : (
         <div className='flex items-center space-x-1 text-muted'>

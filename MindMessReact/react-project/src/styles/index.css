@@ -34,4 +34,7 @@ button:disabled {
     .text-muted {
         @apply text-black/50;
     }
+    .menubar-item {
+        @apply px-2.5 py-1 text-sm hover:bg-hover ring-0 outline-0 h-[32px];
+    }
 }

@@ -8,6 +8,10 @@ export default {
     extend: {
       colors: {
         "main-blue": "#007AFF",
+        "hover": "#0000000d",
+        "secondary-white": "#f0f0f0",
+        "border": "#C7C7C7",
+        "red": "#FA586A",
       },
       screens: {
         "xs": "400px",
