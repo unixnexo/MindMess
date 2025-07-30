@@ -44,28 +44,29 @@ namespace MindMess.Controllers
                 }
             }
 
-            var token = JwtHelper.GenerateLoginToken(email, _config["JwtSecret"]!);
-
+            // Find or create user BEFORE generating token
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
             {
                 user = new User { Email = email };
                 _db.Users.Add(user);
+                await _db.SaveChangesAsync();
             }
+
+            var token = JwtHelper.GenerateLoginToken(user.Id, email, _config["JwtSecret"]!);
 
             user.MagicLinkToken = token;
             user.TokenExpiration = DateTime.UtcNow.AddMinutes(10);
             await _db.SaveChangesAsync();
 
-            // Send email
             var magicLink = $"http://localhost:5173/auth/verify?token={token}";
             await _email.SendMagicLinkAsync(email, magicLink);
 
-            // Update cooldown
             _magicLinkCooldown[email] = DateTime.UtcNow;
 
             return Ok(new { success = true });
         }
+
 
         [HttpPost("validate-token")]
         public async Task<IActionResult> ValidateToken([FromBody] string token)
@@ -73,16 +74,17 @@ namespace MindMess.Controllers
             var claims = JwtHelper.Validate(token, _config["JwtSecret"]!);
             if (claims == null) return Unauthorized();
 
-            var email = claims.FindFirstValue(ClaimTypes.NameIdentifier) ??
-                        claims.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            var email = claims.FindFirstValue("email") ??
+                claims.FindFirstValue(JwtRegisteredClaimNames.Email) ??
+                claims.FindFirstValue(ClaimTypes.Email);
+
+            if (email == null) return Unauthorized();
 
             var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email && u.MagicLinkToken == token);
             if (user == null || user.TokenExpiration < DateTime.UtcNow)
                 return Unauthorized();
 
-            // Final user session token
-            var sessionToken = JwtHelper.GenerateLoginToken(user.Email, _config["JwtSecret"]!, 60 * 24 * 30); // 30 days
-
+            var sessionToken = JwtHelper.GenerateLoginToken(user.Id, user.Email, _config["JwtSecret"]!, 60 * 24 * 30);
             return Ok(new { token = sessionToken });
         }
     }

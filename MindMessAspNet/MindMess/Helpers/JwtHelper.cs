@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using MindMess.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -7,11 +8,12 @@ namespace MindMess.Helpers
 {
     public static class JwtHelper
     {
-        public static string GenerateLoginToken(string email, string secret, int minutesValid = 30)
+        public static string GenerateLoginToken(Guid userId, string email, string secret, int minutesValid = 30)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
@@ -20,8 +22,8 @@ namespace MindMess.Helpers
             var expires = DateTime.UtcNow.AddMinutes(minutesValid);
 
             var token = new JwtSecurityToken(
-                issuer: "MindMess",
-                audience: "MindMessUser",
+                //issuer: "MindMess",
+                //audience: "MindMessUser",
                 claims: claims,
                 expires: expires,
                 signingCredentials: creds
