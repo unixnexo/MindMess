@@ -54,7 +54,7 @@ function AuthPage() {
     };
 
     return (  
-        <div className="flex items-center justify-center h-[100dvh]">
+        <div className="flex items-center justify-center h-[100dvh] max-1600">
 
             <Drawings startAnimation={startAnimation} />
             

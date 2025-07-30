@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom";
 import Header from "./header/Header";
+import { useEffect } from "react";
 
 function Layout() {
-    return (
+  return (
     <>
       <Header />
     </>

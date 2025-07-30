@@ -1,19 +1,41 @@
+import { useProjects } from "../../features/project/project.api";
+import Spinner from "../../components/ui/Spinner";
+import Popup from "../../components/ui/Popup";
+import { useEffect, useState } from "react";
+import GridCard from "./GridCard";
+
 
 function Home() {
-    return (  
-        <div className="p-5">
-            <div className="grid grid-cols-4 gap-5">
-                <div className="bg-gray-200 shadow-lg rounded-lg">1</div>
-                <div className="grid grid-cols-4 *:h-[200px] gap-5 bg-white shadow-lg col-span-3">
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                    <div>6</div>
-                    <div>7</div>
-                    <div>8</div>
-                </div>
-            </div>
+
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
+    const { data: projects, isLoading, error } = useProjects();
+
+    // handle error & loading
+    useEffect(() => {
+        if (error) setShowErrorAlert(true);
+    }, [error]);
+    if (isLoading) return <Spinner fullScreen="true" />
+    
+
+    return ( 
+        <div className="max-1600">
+        <div>
+            <GridCard projects={projects} />
+        </div>
+
+        {showErrorAlert && (
+            <Popup
+                variant="alert"
+                open={showErrorAlert}
+                onOpenChange={setShowErrorAlert}
+                description="A server error occurred. Please try again."
+                confirmText="Try Again"
+                onConfirm={() => {
+                    setShowErrorAlert(false);
+                    window.location.reload();
+                }}
+            />
+        )}
         </div>
     );
 }

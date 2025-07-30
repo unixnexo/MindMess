@@ -6,8 +6,8 @@ function Header() {
     const logout = useAuth(state => state.logout);
 
     return (  
-        <header className="flex justify-between items-center bg-white border-b shadow-sm backdrop-blur-md py-2 px-4 h-[43px]">
-
+        <header className="bg-white border-b shadow-sm py-2 px-4 h-[43px] hidden">
+        <div className='max-1600 flex justify-between items-center'>
             <div className="flex items-center space-x-2">
                 <img src="/logo.webp" width="30" alt="MindMess Logo" />
             </div>
@@ -36,7 +36,7 @@ function Header() {
                     </Menubar.Item>
                 </CustomMenubar>
             </div>
-
+        </div>
         </header>
     );
 }
