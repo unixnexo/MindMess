@@ -24,10 +24,6 @@ export default function GridCard({ projects }) {
         return 'bg-green-400';
     };
 
-    const handleAddNew = () => {
-        setIsCreatingNew(true);
-    };
-
     const handleSave = (formData) => {
         console.log('Saving:', formData);
         setIsCreatingNew(false);

@@ -30,7 +30,7 @@ html, body, * {
 }
 
 :root, body, html {
-    overflow-x: hidden !important;
+    overflow: hidden !important;
     position: relative;
 }
 
