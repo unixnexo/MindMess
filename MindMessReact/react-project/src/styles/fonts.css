@@ -1,13 +1,3 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
-
-.winky-rough {
-  font-family: "Winky Rough", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-} */
-
-
 @font-face {
   font-family: 'WinkyRough';
   src: url('/fonts/WinkyRough-Regular.woff2') format('woff2');

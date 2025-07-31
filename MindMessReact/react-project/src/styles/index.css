@@ -4,6 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    .btn-default {
+        @apply bg-main-blue text-white hover:brightness-105 px-6 py-3 rounded-3xl;
+    }
+
+    .input-default {
+        @apply w-full px-3 py-1 border border-gray-300 rounded-lg text-base focus:outline-none focus:border-blue-500;
+    }
+    .text-muted {
+        @apply text-black/50;
+    }
+    .menubar-item {
+        @apply px-2.5 py-1 text-sm hover:bg-hover ring-0 outline-0 h-[32px];
+    }
+}
+
+/* base */
 html, body, * {
     font-family: "WinkyRough", sans-serif;
     font-optical-sizing: auto;
@@ -13,11 +30,22 @@ html, body, * {
 }
 
 :root, body, html {
-    overflow-y: hidden !important;
+    overflow-x: hidden !important;
     position: relative;
 }
 
+.max-1600 {
+    max-width: 1600px !important;
+    margin: 0 auto;
+}
 
+button:disabled {
+    cursor: not-allowed !important;
+}
+/*  */
+
+
+/* backgrounds */
 .bg-gradient {
     background-image: url('/wallpaper.svg');
     background-size: cover;
@@ -43,27 +71,3 @@ html, body, * {
     background: radial-gradient(circle at 97% 3.3%, rgba(0, 0, 0, .35) 0, rgba(0, 0, 0, .6) 164%);
 }
 
-.max-1600 {
-    max-width: 1600px !important;
-    margin: 0 auto;
-}
-
-button:disabled {
-    cursor: not-allowed !important;
-}
-
-@layer base {
-    .btn-default {
-        @apply bg-main-blue text-white hover:brightness-105 px-6 py-3 rounded-3xl;
-    }
-
-    .input-default {
-        @apply w-full px-3 py-1 border border-gray-300 rounded-lg text-base focus:outline-none focus:border-blue-500;
-    }
-    .text-muted {
-        @apply text-black/50;
-    }
-    .menubar-item {
-        @apply px-2.5 py-1 text-sm hover:bg-hover ring-0 outline-0 h-[32px];
-    }
-}
