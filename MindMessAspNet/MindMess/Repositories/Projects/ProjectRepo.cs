@@ -15,6 +15,7 @@ namespace MindMess.Repositories.Project
         public Task<List<Models.Project>> GetAllByUserAsync(Guid userId) =>
             _db.Projects.Include(p => p.Tasks)
                         .Where(p => p.UserId == userId)
+                        .OrderByDescending(p => p.CreatedAt)
                         .ToListAsync();
 
         public Task AddAsync(Models.Project project) => _db.Projects.AddAsync(project).AsTask();

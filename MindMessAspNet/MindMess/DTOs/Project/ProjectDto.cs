@@ -1,4 +1,6 @@
-﻿namespace MindMess.DTOs.Project
+﻿using System.Text.Json.Serialization;
+
+namespace MindMess.DTOs.Project
 {
     public class ProjectDto
     {

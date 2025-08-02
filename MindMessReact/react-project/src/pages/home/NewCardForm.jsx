@@ -1,7 +1,25 @@
 import { useState } from 'react';
+import { z } from 'zod'
+import { cn } from "../../lib/cn";
 
-export default function NewCardForm({ onSave, onCancel }) {
+const projectSchema = z.object({
+    title: z.string().min(1, 'Title is required'),
+    description: z.string().min(1, 'Description is required'),
+    startDate: z.string().min(1, 'Start date is required'),
+    endDate: z.string().optional().or(z.literal('')),
+}).refine((data) => {
+    if (data.endDate && data.endDate !== '') {
+        return new Date(data.endDate) > new Date(data.startDate);
+    }
+    return true;
+}, {
+    message: "End date must be after start date",
+    path: ["endDate"]
+});
+
+export default function NewCardForm({ onSave, onCancel, isCreating }) {
     
+    const [errors, setErrors] = useState({})
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -10,9 +28,20 @@ export default function NewCardForm({ onSave, onCancel }) {
     });
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
+
+        const result = projectSchema.safeParse(formData)
+
+        if (!result.success) {
+            setErrors(result.error.flatten().fieldErrors)
+            return
+        }
+
+        setErrors({})
+
+        // submit valid data
         onSave(formData);
-    };
+    }
 
     return (
         <div className="h-[196px] bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-[24px] rounded-xl p-6 shadow-2xl border-2 border-blue-400/30">
@@ -23,7 +52,11 @@ export default function NewCardForm({ onSave, onCancel }) {
                         placeholder="Project title..."
                         value={formData.title}
                         onChange={(e) => setFormData({...formData, title: e.target.value})}
-                        className="w-full placeholder-white/60 bg-transparent border-none ring-0 outline-none mb-2"
+                        className={cn(
+                            "w-full bg-transparent border-none ring-0 outline-none mb-2",
+                            "placeholder-white/60",
+                            errors.title && "placeholder-red"
+                        )}
                         autoFocus
                     />
                     <input 
@@ -31,7 +64,10 @@ export default function NewCardForm({ onSave, onCancel }) {
                         placeholder="Project description..."
                         value={formData.description}
                         onChange={(e) => setFormData({...formData, description: e.target.value})}
-                        className="w-full placeholder-white/60 outline-none ring-0 bg-transparent border-none"
+                        className={cn(
+                            "w-full bg-transparent border-none ring-0 outline-none placeholder-white/60",
+                            errors.description && "placeholder-red"
+                        )}
                     />
                 </div>
 
@@ -40,26 +76,36 @@ export default function NewCardForm({ onSave, onCancel }) {
                         type="date" 
                         value={formData.startDate}
                         onChange={(e) => setFormData({...formData, startDate: e.target.value})}
-                        className="bg-white/10 border border-white/20 rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-blue-400/50"
+                        className={cn(
+                            "bg-white/10 border border-white/20 rounded-lg px-2 py-1 text-xs",
+                            "focus:outline-none focus:border-blue-400/50",
+                            (errors.startDate || errors.endDate) ? "placeholder-red text-red" : "text-white"
+                        )}
                     />
                     <input 
                         type="date" 
                         value={formData.endDate}
                         onChange={(e) => setFormData({...formData, endDate: e.target.value})}
-                        className="bg-white/10 border border-white/20 rounded-lg px-2 py-1 text-xs text-white focus:outline-none focus:border-blue-400/50"
+                        className={cn(
+                            "bg-white/10 border border-white/20 rounded-lg px-2 py-1 text-xs text-white",
+                            "focus:outline-none focus:border-blue-400/50",
+                            errors.endDate ? "placeholder-red text-red" : "text-white"
+                        )}
                     />
                 </div>
 
                 <div className="flex gap-2">
                     <button 
                         type="submit"
-                        className="flex-1 bg-main-blue hover:bg-[#007bffb6] text-white text-sm py-1 px-4 rounded-lg transition-colors"
+                        disabled={isCreating}
+                        className="flex-1 bg-main-blue hover:bg-[#007bffb6] text-white text-sm py-1 px-4 rounded-lg transition-colors ring-0 outline-none"
                     >
-                        Save
+                        {isCreating ? 'Saving...' : 'Save'}
                     </button>
                     <button 
                         type="button"
-                        className="flex-1 bg-white/10 hover:bg-white/20 text-white text-sm py-1 px-4 rounded-lg transition-colors"
+                        disabled={isCreating}
+                        className="flex-1 bg-white/10 hover:bg-white/20 text-white text-sm py-1 px-4 rounded-lg transition-colors ring-0 outline-none"
                         onClick={onCancel}
                     >
                         Cancel

@@ -1,16 +1,25 @@
 import NewCardForm from "./NewCardForm";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useCreateProjectUIStore } from "../../features/project/useCreateProjectUIStore";
+import { useCreateProject } from "../../features/project/project.api";
+import { useState } from "react";
+import Popup from "../../components/ui/Popup";
+
 
 export default function GridCard({ projects }) {
+
+    const [showErrorAlert, setShowErrorAlert] = useState(false);
 
     const { isCreatingNew, setIsCreatingNew } = useCreateProjectUIStore();
     const [animationParent] = useAutoAnimate({
         duration: 400,
         easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
     });
+    const createProject = useCreateProject();
+
 
     const formatDate = (dateString) => {
+        if (!dateString) return null;
         return new Date(dateString).toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric'
@@ -25,8 +34,21 @@ export default function GridCard({ projects }) {
     };
 
     const handleSave = (formData) => {
-        console.log('Saving:', formData);
-        setIsCreatingNew(false);
+
+        const payload = {
+            ...formData,
+            endDate: formData.endDate === '' ? null : formData.endDate // convert "" to null
+        }
+
+        createProject.mutate(payload, {
+            onSuccess: () => {
+                setIsCreatingNew(false);
+            },
+            onError: (err) => {
+                console.error('Create failed:', err);
+                setShowErrorAlert(true);
+            }
+        })
     };
 
     const handleCancel = () => {
@@ -38,7 +60,7 @@ export default function GridCard({ projects }) {
             <div ref={animationParent} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-6 mx-auto">
                 {/* New card form - appears first */}
                 {isCreatingNew && (
-                    <NewCardForm onSave={handleSave} onCancel={handleCancel} />
+                    <NewCardForm onSave={handleSave} onCancel={handleCancel} isCreating={createProject.isLoading} />
                 )}
                 
                 {/* Existing projects */}
@@ -76,6 +98,20 @@ export default function GridCard({ projects }) {
                     </div>
                 ))}
             </div>
+
+            {showErrorAlert && (
+                <Popup
+                    variant="alert"
+                    open={showErrorAlert}
+                    onOpenChange={setShowErrorAlert}
+                    description="A server error occurred. Please try again."
+                    confirmText="Ok"
+                    onConfirm={() => {
+                        setShowErrorAlert(false);
+                    }}
+                />
+            )}
+
         </div>
     );
 }

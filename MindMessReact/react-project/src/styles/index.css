@@ -42,6 +42,12 @@ html, body, * {
 button:disabled {
     cursor: not-allowed !important;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .radix-scrollbar {
+    display: none;
+  }
+}
 /*  */
 
 

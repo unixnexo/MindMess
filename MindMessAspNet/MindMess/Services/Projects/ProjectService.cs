@@ -28,6 +28,9 @@ namespace MindMess.Services.Project
 
         public async Task<ProjectResponseDto> Create(Guid userId, CreateProjectDto dto)
         {
+            if (dto.EndDate.HasValue && dto.EndDate < dto.StartDate)
+                throw new ArgumentException("End date must be after start date.");
+
             var p = new Models.Project
             {
                 Title = dto.Title,
