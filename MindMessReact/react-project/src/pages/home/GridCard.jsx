@@ -12,7 +12,7 @@ export default function GridCard({ projects }) {
 
     const { isCreatingNew, setIsCreatingNew } = useCreateProjectUIStore();
     const [animationParent] = useAutoAnimate({
-        duration: 400,
+        duration: 250,
         easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
     });
     const createProject = useCreateProject();
@@ -64,39 +64,43 @@ export default function GridCard({ projects }) {
                 )}
                 
                 {/* Existing projects */}
-                {projects.map((project) => (
-                    <div key={project.id} className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] rounded-xl p-6 shadow-2xl cursor-pointer hover:scale-[1.02] transition-transform will-change-auto duration-300">
-                        {/* Header */}
-                        <div className="mb-4">
-                            <h3 className="text-lg font-semibold mb-2 line-clamp-2">
-                                {project.title}
-                            </h3>
-                            <p className="text-sm text-white/80 line-clamp-2">
-                                {project.description}
-                            </p>
-                        </div>
-
-                        {/* Progress */}
-                        <div className="mb-4">
-                            <div className="flex items-center justify-between mb-2">
-                                <span className="text-xs font-medium text-white/80">Progress</span>
-                                <span className="text-xs font-medium text-white/80">{project.progress}%</span>
+                {projects.length === 0 && !isCreatingNew ? (
+                    <div className="flex items-center justify-center absolute h-[calc(100dvh-120px)] w-full">No projects</div>
+                    ) : (
+                    projects.map((project) => (
+                        <div key={project.id} className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] rounded-xl p-6 shadow-2xl cursor-pointer hover:scale-[1.02] transition-transform will-change-auto duration-300">
+                            {/* Header */}
+                            <div className="mb-4">
+                                <h3 className="text-lg font-semibold mb-2 line-clamp-2">
+                                    {project.title}
+                                </h3>
+                                <p className="text-sm text-white/80 line-clamp-2">
+                                    {project.description}
+                                </p>
                             </div>
-                            <div className="w-full bg-white/80 rounded-full h-2">
-                                <div
-                                    className={`h-2 rounded-full transition-all duration-300 ${getProgressColor(project.progress)}`}
-                                    style={{ width: `${project.progress}%` }}
-                                ></div>
+
+                            {/* Progress */}
+                            <div className="mb-4">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-xs font-medium text-white/80">Progress</span>
+                                    <span className="text-xs font-medium text-white/80">{project.progress}%</span>
+                                </div>
+                                <div className="w-full bg-white/80 rounded-full h-2">
+                                    <div
+                                        className={`h-2 rounded-full transition-all duration-300 ${getProgressColor(project.progress)}`}
+                                        style={{ width: `${project.progress}%` }}
+                                    ></div>
+                                </div>
+                            </div>
+
+                            {/* Dates */}
+                            <div className="flex items-center justify-between text-sm text-white/80">
+                                <span>{formatDate(project.startDate)}</span>
+                                <span>{formatDate(project.endDate)}</span>
                             </div>
                         </div>
-
-                        {/* Dates */}
-                        <div className="flex items-center justify-between text-sm text-white/80">
-                            <span>{formatDate(project.startDate)}</span>
-                            <span>{formatDate(project.endDate)}</span>
-                        </div>
-                    </div>
-                ))}
+                    ))
+                )}
             </div>
 
             {showErrorAlert && (
