@@ -54,8 +54,7 @@ export default function NewCardForm({ onSave, onCancel, isCreating }) {
                         onChange={(e) => setFormData({...formData, title: e.target.value})}
                         className={cn(
                             "w-full bg-transparent border-none ring-0 outline-none mb-2",
-                            "placeholder-white/60",
-                            errors.title && "placeholder-red"
+                            errors.title ? "placeholder-red" : "placeholder-white/60"
                         )}
                         autoFocus
                     />
@@ -65,8 +64,8 @@ export default function NewCardForm({ onSave, onCancel, isCreating }) {
                         value={formData.description}
                         onChange={(e) => setFormData({...formData, description: e.target.value})}
                         className={cn(
-                            "w-full bg-transparent border-none ring-0 outline-none placeholder-white/60",
-                            errors.description && "placeholder-red"
+                            "w-full bg-transparent border-none ring-0 outline-none",
+                            errors.description ? "placeholder-red" : "placeholder-white/60"
                         )}
                     />
                 </div>

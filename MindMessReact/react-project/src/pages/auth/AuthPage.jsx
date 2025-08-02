@@ -104,7 +104,7 @@ function AuthPage() {
                                 initial={{ y: 100 }}
                                 animate={{ y: 0 }}
                                 transition={{
-                                    delay: 6,
+                                    delay: 3,
                                     duration: 0.4,
                                     ease: "easeOut"
                                 }}

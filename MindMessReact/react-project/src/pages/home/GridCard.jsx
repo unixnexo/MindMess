@@ -4,6 +4,8 @@ import { useCreateProjectUIStore } from "../../features/project/useCreateProject
 import { useCreateProject } from "../../features/project/project.api";
 import { useState } from "react";
 import Popup from "../../components/ui/Popup";
+import CustomMenubar from '../../components/ui/CustomMenubar';
+import * as Menubar from '@radix-ui/react-menubar';
 
 
 export default function GridCard({ projects }) {
@@ -68,12 +70,39 @@ export default function GridCard({ projects }) {
                     <div className="flex items-center justify-center absolute h-[calc(100dvh-120px)] w-full">No projects</div>
                     ) : (
                     projects.map((project) => (
-                        <div key={project.id} className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] rounded-xl p-6 shadow-2xl cursor-pointer hover:scale-[1.02] transition-transform will-change-auto duration-300">
+                        <div key={project.id} className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] hover:backdrop-blur-[100px] rounded-xl p-6 shadow-2xl cursor-pointer transition-all duration-300">
                             {/* Header */}
                             <div className="mb-4">
-                                <h3 className="text-lg font-semibold mb-2 line-clamp-2">
-                                    {project.title}
-                                </h3>
+                                <div className="flex justify-between items-start">
+                                    <h3 className="text-lg font-semibold mb-2 line-clamp-2">
+                                        {project.title}
+                                    </h3>
+                                    {/* menubar */}
+                                    <div>
+                                        <CustomMenubar
+                                            trigger={
+                                                <div className='hover:bg-white/10 cursor-pointer p-1.5 rounded-md select-none'>
+                                                    <svg width="22" height="22" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle fill="var(--iconCircleFill, transparent)" cx="14" cy="14" r="14"></circle><path fill="var(--iconEllipsisFill, white)" d="M10.105 14c0-.87-.687-1.55-1.564-1.55-.862 0-1.557.695-1.557 1.55 0 .848.695 1.55 1.557 1.55.855 0 1.564-.702 1.564-1.55zm5.437 0c0-.87-.68-1.55-1.542-1.55A1.55 1.55 0 0012.45 14c0 .848.695 1.55 1.55 1.55.848 0 1.542-.702 1.542-1.55zm5.474 0c0-.87-.687-1.55-1.557-1.55-.87 0-1.564.695-1.564 1.55 0 .848.694 1.55 1.564 1.55.848 0 1.557-.702 1.557-1.55z"></path></svg>
+                                                </div>
+                                            }
+                                        >
+                                            <Menubar.Item className="menubar-item cursor-pointer border-b border-border">
+                                                <div className="flex justify-between items-center stroke-black/80">
+                                                    <span>Canvas</span>
+                                                    <div>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brush-icon lucide-brush"><path d="m11 10 3 3"/><path d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"/><path d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"/></svg>
+                                                    </div>
+                                                </div>
+                                            </Menubar.Item>
+                                            <Menubar.Item className="menubar-item cursor-pointer border-b border-border">
+                                                <span>Edit</span>
+                                            </Menubar.Item>
+                                            <Menubar.Item className="menubar-item cursor-pointer">
+                                                <span>Delete</span>
+                                            </Menubar.Item>
+                                        </CustomMenubar>
+                                    </div>
+                                </div>
                                 <p className="text-sm text-white/80 line-clamp-2">
                                     {project.description}
                                 </p>
