@@ -1,22 +1,24 @@
 import NewCardForm from "./NewCardForm";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useCreateProjectUIStore } from "../../features/project/useCreateProjectUIStore";
-import { useCreateProject } from "../../features/project/project.api";
+import { useCreateProject, useUpdateProject } from "../../features/project/project.api";
 import { useState } from "react";
 import Popup from "../../components/ui/Popup";
 import GridCardMenuBar from "./GridCardMenuBar";
+import EditCardForm from "./EditCardForm";
 
 
 export default function GridCard({ projects }) {
 
     const [showErrorAlert, setShowErrorAlert] = useState(false);
-
+    const [editingProjectId, setEditingProjectId] = useState(null);
     const { isCreatingNew, setIsCreatingNew } = useCreateProjectUIStore();
     const [animationParent] = useAutoAnimate({
         duration: 250,
         easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
     });
     const createProject = useCreateProject();
+    const updateProject = useUpdateProject();
 
 
     const formatDate = (dateString) => {
@@ -34,6 +36,34 @@ export default function GridCard({ projects }) {
         return 'bg-green-400';
     };
 
+    // edit
+    const handleEdit = (projectId) => {
+        setEditingProjectId(projectId);
+    };
+
+    const handleUpdateSave = (formData) => {
+        const payload = {
+            ...formData,
+            endDate: formData.endDate === '' ? null : formData.endDate
+        };
+
+        updateProject.mutate({ id: editingProjectId, data: payload }, {
+            onSuccess: () => {
+                setEditingProjectId(null);
+            },
+            onError: (err) => {
+                console.error('Update failed:', err);
+                setShowErrorAlert(true);
+            }
+        });
+    };
+
+    const handleEditCancel = () => {
+        setEditingProjectId(null);
+    };
+    //
+
+    // create
     const handleSave = (formData) => {
 
         const payload = {
@@ -55,6 +85,7 @@ export default function GridCard({ projects }) {
     const handleCancel = () => {
         setIsCreatingNew(false);
     };
+    //
 
     return (
         <div className="px-2 xs:px-3 lg:px-6 py-8 min-h-screen text-white">
@@ -69,7 +100,16 @@ export default function GridCard({ projects }) {
                     <div className="flex items-center justify-center absolute h-[calc(100dvh-120px)] w-full">No projects</div>
                     ) : (
                     projects.map((project) => (
-                        <div key={project.id} className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] hover:backdrop-blur-[100px] rounded-xl p-6 shadow-2xl cursor-pointer transition-all duration-300">
+                        editingProjectId === project.id ? (
+                            <EditCardForm 
+                                key={project.id}
+                                project={project}
+                                onSave={handleUpdateSave} 
+                                onCancel={handleEditCancel} 
+                                isUpdating={updateProject.isLoading} 
+                            />
+                        ) : (
+                        <div key={project.id} className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] hover:backdrop-blur-[100px] rounded-xl p-3 xs:p-4 lg:p-6 shadow-2xl cursor-pointer transition-all duration-300">
                             {/* Header */}
                             <div className="mb-4">
                                 <div className="flex justify-between items-start">
@@ -78,7 +118,7 @@ export default function GridCard({ projects }) {
                                     </h3>
                                     {/* menubar */}
                                     <div>
-                                        <GridCardMenuBar projectId={project.id} />
+                                        <GridCardMenuBar projectId={project.id} onEdit={handleEdit} />
                                     </div>
                                 </div>
                                 <p className="text-sm text-white/80 line-clamp-2">
@@ -106,6 +146,7 @@ export default function GridCard({ projects }) {
                                 <span>{formatDate(project.endDate)}</span>
                             </div>
                         </div>
+                        )
                     ))
                 )}
             </div>

@@ -5,7 +5,7 @@ import Popup from '../../components/ui/Popup';
 import { useState } from 'react';
 
 
-function GridCardMenuBar({ projectId }) {
+function GridCardMenuBar({ projectId, onEdit }) {
 
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [showErrorPopup, setShowErrorPopup] = useState(false);
@@ -40,7 +40,7 @@ function GridCardMenuBar({ projectId }) {
                 </div>
             </Menubar.Item>
             {/* edit */}
-            <Menubar.Item className="menubar-item cursor-pointer border-b border-border">
+            <Menubar.Item onClick={() => onEdit(projectId)} className="menubar-item cursor-pointer border-b border-border">
                 <div className="flex justify-between items-center fill-black/80">
                     <span>Edit</span>
                     <div>
@@ -49,7 +49,7 @@ function GridCardMenuBar({ projectId }) {
                 </div>
             </Menubar.Item>
             {/* delete */}
-            <Menubar.Item className="menubar-item cursor-pointer" onClick={() => setShowDeletePopup(true)}>
+            <Menubar.Item onClick={() => setShowDeletePopup(true)} className="menubar-item cursor-pointer">
                 <div className="flex justify-between items-center stroke-red text-red">
                     <span>Delete</span>
                     <div>

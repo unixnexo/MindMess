@@ -10,7 +10,7 @@ export const useProjects = () => {
 
 export const useCreateProject = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (data) => api.post('/projects', data),
     onSuccess: () => {
@@ -19,13 +19,24 @@ export const useCreateProject = () => {
   });
 };
 
+export const useUpdateProject = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }) => api.put(`/projects/${id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['projects']);
+    }
+  });
+};
+
 export const useDeleteProject = () => {
- const queryClient = useQueryClient();
- 
- return useMutation({
-   mutationFn: (id) => api.delete(`/projects/${id}`),
-   onSuccess: () => {
-     queryClient.invalidateQueries(['projects']);
-   }
- });
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => api.delete(`/projects/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['projects']);
+    }
+  });
 };
