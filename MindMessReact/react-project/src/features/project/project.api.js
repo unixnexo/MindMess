@@ -18,3 +18,14 @@ export const useCreateProject = () => {
     }
   });
 };
+
+export const useDeleteProject = () => {
+ const queryClient = useQueryClient();
+ 
+ return useMutation({
+   mutationFn: (id) => api.delete(`/projects/${id}`),
+   onSuccess: () => {
+     queryClient.invalidateQueries(['projects']);
+   }
+ });
+};

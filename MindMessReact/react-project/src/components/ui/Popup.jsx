@@ -64,7 +64,7 @@ const Popup = ({
                 <button 
                   className={`flex-1 py-2 font-semibold hover:bg-gray-50 active:bg-gray-100 transition-colors max-h-[40px] outline-none ${
                     confirmStyle === "destructive" 
-                      ? "text-red-500" 
+                      ? "text-red" 
                       : "text-blue-500"
                   }`}
                   onClick={onConfirm}
