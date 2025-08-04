@@ -17,7 +17,7 @@ namespace MindMess.Controllers
 
         private Guid GetUserId()
         {
-            var id = User.FindFirstValue(JwtRegisteredClaimNames.Jti);
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Guid.TryParse(id, out var guid) ? guid : throw new Exception("Invalid token");
         }
 
@@ -28,11 +28,12 @@ namespace MindMess.Controllers
             return result == null ? NotFound() : Ok(result);
         }
 
-        [HttpPut]
+        [HttpPost, HttpPut]
         public async Task<IActionResult> Save(Guid projectId, [FromBody] DrawingDto dto)
         {
-            var ok = await _service.Save(projectId, GetUserId(), dto);
-            return ok ? NoContent() : NotFound();
+            var userId = GetUserId();
+            var success = await _service.Save(projectId, userId, dto);
+            return success ? Ok(new { success = true }) : BadRequest(new { error = "Project not found." });
         }
     }
 

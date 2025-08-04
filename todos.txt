@@ -1,0 +1,1 @@
+- first page auth has many desing props, test also in responsive

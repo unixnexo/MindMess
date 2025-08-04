@@ -3,6 +3,7 @@ import * as Menubar from '@radix-ui/react-menubar';
 import { useDeleteProject } from '../../features/project/project.api';
 import Popup from '../../components/ui/Popup';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 function GridCardMenuBar({ projectId, onEdit }) {
@@ -10,6 +11,7 @@ function GridCardMenuBar({ projectId, onEdit }) {
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [showErrorPopup, setShowErrorPopup] = useState(false);
     const deleteProject = useDeleteProject();
+    const navigate = useNavigate();
 
     const handleDelete = async (projectId) => {
         try {
@@ -31,7 +33,7 @@ function GridCardMenuBar({ projectId, onEdit }) {
             }
         >
             {/* canvas */}
-            <Menubar.Item className="menubar-item cursor-pointer border-b border-border">
+            <Menubar.Item onClick={() => navigate(`/app/project/${projectId}/drawing`)} className="menubar-item cursor-pointer border-b border-border">
                 <div className="flex justify-between items-center stroke-black/80">
                     <span>Canvas</span>
                     <div>

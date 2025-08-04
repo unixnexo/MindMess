@@ -21,7 +21,7 @@ const VerifyPage = () => {
     verifyMagicToken(token)
       .then((res) => {
         login(res.user, token); // save user + token
-        navigate('/app/home'); // redirect to homepage
+        navigate('/app/'); // redirect to homepage
       })
       .catch((err) => {
         setError(err?.error || 'Verification failed, request a new link!');

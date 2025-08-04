@@ -3,40 +3,50 @@ import Home from '../pages/home/Home';
 import AuthPage from '../pages/auth/AuthPage';
 import Layout from "../components/layout/Layout";
 import VerifyPage from '../features/auth/VerifyPage';
-import ProtectedRoute  from '../features/auth/ProtectedRoute';
-import GuestRoute  from '../features/auth/GuestRoute';
+import ProtectedRoute from '../features/auth/ProtectedRoute';
+import GuestRoute from '../features/auth/GuestRoute';
+import DrawingPage from '../pages/drawing/DrawingPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 export const router = createBrowserRouter([
+
+  // app (home, drawing)
   {
     path: '/app',
     element: (
-    <ProtectedRoute>
-      <Layout />
-    </ProtectedRoute>
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
     ),
     children: [
-      { path: 'home', element: <Home /> }
+      { index: true, element: <Home /> },
+      { path: 'project/:projectId/drawing', element: <DrawingPage /> }
     ]
   },
-  { 
-    path: '/', 
+  //
+
+  // auth
+  {
+    path: '/',
     element: (
-    <GuestRoute>
-      <AuthPage />
-    </GuestRoute>
+      <GuestRoute>
+        <AuthPage />
+      </GuestRoute>
     )
 
   },
-  { 
-    path: '/auth/verify', 
+  {
+    path: '/auth/verify',
     element: (
-    <GuestRoute>
-      <VerifyPage />
-    </GuestRoute>
+      <GuestRoute>
+        <VerifyPage />
+      </GuestRoute>
     )
   },
-  {
-    path: '*',
-    // element: <NotFound />
-  }
+  //
+
+  // not found
+  { path: '*', element: <NotFoundPage /> }
+  //
+
 ]);

@@ -10,7 +10,7 @@ const Spinner = ({ fullScreen = false }) => {
 
  const overlayStyle = {
    position: 'fixed',
-   top: 0,
+   top: -15,
    left: 0,
    right: 0,
    bottom: 0,
@@ -18,7 +18,9 @@ const Spinner = ({ fullScreen = false }) => {
    display: 'flex',
    alignItems: 'center',
    justifyContent: 'center',
-   zIndex: 9999
+   zIndex: 9999,
+   height: '100dvh',
+   width: '100vw'
  };
 
  const barBaseStyle = {

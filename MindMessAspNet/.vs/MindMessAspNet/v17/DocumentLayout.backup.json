@@ -1,12 +1,54 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|d:\\design and program development\\mindmess_no_paper_project_task_tracker_21_7_2025\\mindmessaspnet\\mindmess\\controllers\\drawingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|solutionrelative:mindmess\\controllers\\drawingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|d:\\design and program development\\mindmess_no_paper_project_task_tracker_21_7_2025\\mindmessaspnet\\mindmess\\helpers\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C435509-D9D5-4D85-9412-6AB875F1008B}|MindMess\\MindMess.csproj|solutionrelative:mindmess\\helpers\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "JwtHelper.cs",
+              "DocumentMoniker": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Helpers\\JwtHelper.cs",
+              "RelativeDocumentMoniker": "MindMess\\Helpers\\JwtHelper.cs",
+              "ToolTip": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Helpers\\JwtHelper.cs",
+              "RelativeToolTip": "MindMess\\Helpers\\JwtHelper.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T21:24:49.456Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DrawingsController.cs",
+              "DocumentMoniker": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Controllers\\DrawingsController.cs",
+              "RelativeDocumentMoniker": "MindMess\\Controllers\\DrawingsController.cs",
+              "ToolTip": "D:\\design and program development\\MindMess_no_paper_project_task_tracker_21_7_2025\\MindMessAspNet\\MindMess\\Controllers\\DrawingsController.cs",
+              "RelativeToolTip": "MindMess\\Controllers\\DrawingsController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T15:06:09.987Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
