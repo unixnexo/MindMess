@@ -2,6 +2,7 @@ import CustomMenubar from '../../ui/CustomMenubar';
 import * as Menubar from '@radix-ui/react-menubar';
 import { useAuth } from '@/features/auth/auth.store.js';
 import { useCreateProjectUIStore } from "../../../features/project/useCreateProjectUIStore";
+import { Link, useLocation } from 'react-router-dom';
 
 
 function Header() {
@@ -10,7 +11,11 @@ function Header() {
     const logout = useAuth(state => state.logout);
 
     // for add btn to create a new project
-    const setIsCreatingNewProject = useCreateProjectUIStore((s) => s.setIsCreatingNew)
+    const setIsCreatingNewProject = useCreateProjectUIStore((s) => s.setIsCreatingNew);
+
+    // location
+    const location = useLocation();
+    const isDrawingRoute = location.pathname.includes('/project/') && location.pathname.includes('/drawing'); // canvas - drawing
 
     return (  
         <header className="bg-gradient-backdropy backdrop-blur-[24px] text-white shadow-lg py-2 px-4 h-[43px]">
@@ -21,10 +26,18 @@ function Header() {
             </div>
 
             <div className="flex items-center fill-white/85 space-x-1">
-                {/* add */}
-                <div onClick={() => setIsCreatingNewProject(true)} className='hover:bg-white/10 cursor-pointer p-1.5 rounded-md select-none'>
-                    <svg height="18" width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true"><path d="M29.9475268,59.5867724 C46.1333288,59.5867724 59.534715,46.15661 59.534715,29.9998218 C59.534715,13.8140198 46.1043387,0.412871288 29.9185367,0.412871288 C13.7617248,0.412871288 0.36059406,13.8140198 0.36059406,29.9998218 C0.36059406,46.15661 13.7907743,59.5867724 29.9475268,59.5867724 Z M29.9475268,54.6556041 C16.256299,54.6556041 5.32073466,43.6910496 5.32073466,29.9998218 C5.32073466,16.3085941 16.2273089,5.34403961 29.9185367,5.34403961 C43.6097644,5.34403961 54.5743189,16.3085941 54.6035429,29.9998218 C54.6325367,43.6910496 43.6387545,54.6556041 29.9475268,54.6556041 Z M17.1265367,30.0288119 C17.1265367,31.4501585 18.1417842,32.4073664 19.6211109,32.4073664 L27.4819426,32.4073664 L27.4819426,40.3262377 C27.4819426,41.7765743 28.4682,42.7628318 29.8895466,42.7628318 C31.3398832,42.7628318 32.3551307,41.7765743 32.3551307,40.3262377 L32.3551307,32.4073664 L40.2449525,32.4073664 C41.6952892,32.4073664 42.7105367,31.4501585 42.7105367,30.0288119 C42.7105367,28.5784753 41.6952892,27.5632278 40.2449525,27.5632278 L32.3551307,27.5632278 L32.3551307,19.7023961 C32.3551307,18.1940198 31.3398832,17.2078218 29.8895466,17.2078218 C28.4682,17.2078218 27.4819426,18.2230693 27.4819426,19.7023961 L27.4819426,27.5632278 L19.6211109,27.5632278 C18.1417842,27.5632278 17.1265367,28.5784753 17.1265367,30.0288119 Z" transform="translate(2 2)"></path></svg>
-                </div>
+                {isDrawingRoute ? (
+                    // get back to home
+                    <Link to="/app/" className='hover:bg-white/10 cursor-pointer p-1.5 rounded-md select-none stroke-white/80'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    </Link>
+                ) : (
+                    // add
+                    <div onClick={() => setIsCreatingNewProject(true)} className='hover:bg-white/10 cursor-pointer p-1.5 rounded-md select-none'>
+                        <svg height="18" width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true"><path d="M29.9475268,59.5867724 C46.1333288,59.5867724 59.534715,46.15661 59.534715,29.9998218 C59.534715,13.8140198 46.1043387,0.412871288 29.9185367,0.412871288 C13.7617248,0.412871288 0.36059406,13.8140198 0.36059406,29.9998218 C0.36059406,46.15661 13.7907743,59.5867724 29.9475268,59.5867724 Z M29.9475268,54.6556041 C16.256299,54.6556041 5.32073466,43.6910496 5.32073466,29.9998218 C5.32073466,16.3085941 16.2273089,5.34403961 29.9185367,5.34403961 C43.6097644,5.34403961 54.5743189,16.3085941 54.6035429,29.9998218 C54.6325367,43.6910496 43.6387545,54.6556041 29.9475268,54.6556041 Z M17.1265367,30.0288119 C17.1265367,31.4501585 18.1417842,32.4073664 19.6211109,32.4073664 L27.4819426,32.4073664 L27.4819426,40.3262377 C27.4819426,41.7765743 28.4682,42.7628318 29.8895466,42.7628318 C31.3398832,42.7628318 32.3551307,41.7765743 32.3551307,40.3262377 L32.3551307,32.4073664 L40.2449525,32.4073664 C41.6952892,32.4073664 42.7105367,31.4501585 42.7105367,30.0288119 C42.7105367,28.5784753 41.6952892,27.5632278 40.2449525,27.5632278 L32.3551307,27.5632278 L32.3551307,19.7023961 C32.3551307,18.1940198 31.3398832,17.2078218 29.8895466,17.2078218 C28.4682,17.2078218 27.4819426,18.2230693 27.4819426,19.7023961 L27.4819426,27.5632278 L19.6211109,27.5632278 C18.1417842,27.5632278 17.1265367,28.5784753 17.1265367,30.0288119 Z" transform="translate(2 2)"></path></svg>
+                    </div>
+                )}
+                
                 {/* the guy */}
                 <CustomMenubar
                     trigger={

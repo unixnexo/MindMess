@@ -47,7 +47,7 @@ const LoginForm = forwardRef(({ onSuccess, onError, onLoadingChange }, ref) => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-red text-sm">{error}</p>}
     </form>
   );
 });
