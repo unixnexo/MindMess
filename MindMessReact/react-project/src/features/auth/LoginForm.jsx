@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { requestMagicLink } from './auth.api';
 
 const schema = z.object({
-  email: z.string().email('Invalid email!'),
+  email: z.string().email('Invalid email!'), 
 });
 
 const LoginForm = forwardRef(({ onSuccess, onError, onLoadingChange }, ref) => {
@@ -43,11 +43,10 @@ const LoginForm = forwardRef(({ onSuccess, onError, onLoadingChange }, ref) => {
       <input
         type="email"
         placeholder="email"
-        className={`input-default ${error ? 'border-red-500 focus:border-red-500' : ''}`}
+        className={`input-default ${error ? 'border-red placeholder-red focus:placeholder-gray-400' : ''}`}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      {error && <p className="text-red text-sm">{error}</p>}
     </form>
   );
 });

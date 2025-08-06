@@ -1,3 +1,1 @@
-- first page auth has many desing props, test also in responsive
-- auth time suscks
 - add undo and indo also with keyboard shit to canvas also add zoom in out

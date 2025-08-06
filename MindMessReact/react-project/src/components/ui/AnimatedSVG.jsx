@@ -1,75 +1,76 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-const AnimatedSVG = ({ 
- svgContent, 
- duration = 1, 
- strokeColor = 'black', 
- strokeWidth = 1,
- className = '',
- startAnimation = true,
- delay = 0
+const AnimatedSVG = ({
+  svgContent,
+  duration = 1,
+  strokeColor = 'black',
+  strokeWidth = 1,
+  className = '',
+  startAnimation = true,
+  delay = 0
 }) => {
- const svgRef = useRef(null);
+  const pathsRef = useRef([]);
 
- useEffect(() => {
-   const svg = svgRef.current;
-   if (!svg) return;
+  useEffect(() => {
+    const paths = pathsRef.current;
 
-   const paths = svg.querySelectorAll('path');
+    paths.forEach(path => {
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = length;
+      path.style.stroke = strokeColor;
+      path.style.strokeWidth = strokeWidth;
+      path.style.fill = 'none';
+      path.style.strokeLinecap = 'round';
+      path.style.strokeLinejoin = 'round';
+      path.style.animation = 'none'; // reset
+    });
 
-   // Always set initial state first to hide paths
-   paths.forEach(path => {
-     const length = path.getTotalLength();
-     path.style.strokeDasharray = length;
-     path.style.strokeDashoffset = length;
-     path.style.stroke = strokeColor;
-     path.style.strokeWidth = strokeWidth;
-     path.style.fill = 'none';
-     path.style.strokeLinecap = 'round';
-     path.style.strokeLinejoin = 'round';
-   });
+    if (!startAnimation) return;
 
-   if (!startAnimation) return;
+    const timer = setTimeout(() => {
+      const animatePath = (index) => {
+        if (index >= paths.length) return;
+        const path = paths[index];
+        path.style.animation = `drawPath ${duration}s ease-in-out forwards`;
 
-   // Start animation after delay
-   const timer = setTimeout(() => {
-     const animatePath = (index) => {
-       if (index >= paths.length) return;
+        const handleAnimationEnd = () => {
+          path.removeEventListener('animationend', handleAnimationEnd);
+          animatePath(index + 1);
+        };
 
-       const path = paths[index];
-       path.style.animation = `drawPath ${duration}s ease-in-out forwards`;
+        path.addEventListener('animationend', handleAnimationEnd);
+      };
 
-       const handleAnimationEnd = () => {
-         path.removeEventListener('animationend', handleAnimationEnd);
-         animatePath(index + 1);
-       };
+      animatePath(0);
+    }, delay * 1000);
 
-       path.addEventListener('animationend', handleAnimationEnd);
-     };
+    return () => clearTimeout(timer);
+  }, [startAnimation, duration, strokeColor, strokeWidth, delay]);
 
-     animatePath(0);
-   }, delay * 1000);
-     
-   return () => clearTimeout(timer);
- }, [startAnimation, svgContent, duration, strokeColor, strokeWidth, delay]);
-
- return (
-   <>
-     <style>{`
-       @keyframes drawPath {
-         to {
-           stroke-dashoffset: 0;
-         }
-       }
-     `}</style>
-     <div
-       className={`${className} will-change-transform`}
-       style={{ transform: 'translateZ(0)' }}
-       ref={svgRef}
-       dangerouslySetInnerHTML={{ __html: svgContent }}
-     />
-   </>
- );
+  return (
+    <>
+      <style>{`
+        @keyframes drawPath {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+      `}</style>
+      <div className={className}>
+        {React.cloneElement(svgContent, {}, 
+          React.Children.map(svgContent.props.children, (child, i) => {
+            if (child.type === 'path') {
+              return React.cloneElement(child, {
+                ref: el => pathsRef.current[i] = el
+              });
+            }
+            return child;
+          })
+        )}
+      </div>
+    </>
+  );
 };
 
 export default AnimatedSVG;
