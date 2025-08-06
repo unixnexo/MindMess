@@ -1,1 +1,2 @@
-- add undo and indo also with keyboard shit to canvas also add zoom in out
+- auto save canvas
+- the auth expiration still sucks
