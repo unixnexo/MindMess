@@ -6,6 +6,7 @@ import { useState } from "react";
 import Popup from "../../components/ui/Popup";
 import GridCardMenuBar from "./GridCardMenuBar";
 import EditCardForm from "./EditCardForm";
+import { Link } from "react-router-dom";
 
 
 export default function GridCard({ projects }) {
@@ -109,7 +110,8 @@ export default function GridCard({ projects }) {
                                 isUpdating={updateProject.isLoading} 
                             />
                         ) : (
-                        <div key={project.id} className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] hover:backdrop-blur-[100px] rounded-xl p-3 xs:p-4 lg:p-6 shadow-2xl cursor-pointer transition-all duration-300">
+                        <Link to={`project/${project.id}/tasks`} key={project.id}>
+                        <div className="h-[196px] bg-gradient-backdropy backdrop-blur-[24px] hover:backdrop-blur-[100px] rounded-xl p-3 xs:p-4 lg:p-6 shadow-2xl cursor-pointer transition-all duration-300">
                             {/* Header */}
                             <div className="mb-4">
                                 <div className="flex justify-between items-start">
@@ -117,7 +119,10 @@ export default function GridCard({ projects }) {
                                         {project.title}
                                     </h3>
                                     {/* menubar */}
-                                    <div>
+                                    <div onClick={(e) => {
+                                            e.stopPropagation()
+                                            e.preventDefault()
+                                        }}>
                                         <GridCardMenuBar projectId={project.id} onEdit={handleEdit} />
                                     </div>
                                 </div>
@@ -146,6 +151,7 @@ export default function GridCard({ projects }) {
                                 <span>{formatDate(project.endDate)}</span>
                             </div>
                         </div>
+                        </Link>
                         )
                     ))
                 )}

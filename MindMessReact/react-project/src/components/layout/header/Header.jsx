@@ -15,7 +15,7 @@ function Header() {
 
     // location
     const location = useLocation();
-    const isDrawingRoute = location.pathname.includes('/project/') && location.pathname.includes('/drawing'); // canvas - drawing
+    const isDrawingRoute = location.pathname.includes('/project/') && (location.pathname.includes('/drawing') || location.pathname.includes('/tasks')); // canvas/drawing - taks
 
     return (  
         <header className="bg-gradient-backdropy backdrop-blur-[24px] text-white shadow-lg py-2 px-4 h-[43px]">

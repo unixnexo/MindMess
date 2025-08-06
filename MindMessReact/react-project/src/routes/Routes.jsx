@@ -7,10 +7,11 @@ import ProtectedRoute from '../features/auth/ProtectedRoute';
 import GuestRoute from '../features/auth/GuestRoute';
 import DrawingPage from '../pages/drawing/DrawingPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import TasksPage from '../pages/task/TasksPage';
 
 export const router = createBrowserRouter([
 
-  // app (home, drawing)
+  // app (home, drawing, task)
   {
     path: '/app',
     element: (
@@ -20,7 +21,8 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Home /> },
-      { path: 'project/:projectId/drawing', element: <DrawingPage /> }
+      { path: 'project/:projectId/drawing', element: <DrawingPage /> },
+      { path: 'project/:projectId/tasks', element: <TasksPage /> }
     ]
   },
   //

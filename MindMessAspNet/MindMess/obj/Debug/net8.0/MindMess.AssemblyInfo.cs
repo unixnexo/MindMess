@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MindMess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1db4d661d1f1be932c4a1a57a046a6a9134f566e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c49cb32927b7443bf810694984b14085c57ddde6")]
 [assembly: System.Reflection.AssemblyProductAttribute("MindMess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MindMess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
