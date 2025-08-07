@@ -6,6 +6,10 @@ import {
   useSensors
 } from '@dnd-kit/core'
 import {
+  restrictToVerticalAxis,
+  restrictToParentElement
+} from '@dnd-kit/modifiers'
+import {
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
@@ -36,6 +40,8 @@ export default function TasksPage() {
   const [newTask, setNewTask] = useState({ title: '', notes: '' })
   const [editingId, setEditingId] = useState(null)
   const [orderedTasks, setOrderedTasks] = useState([])
+  const [isFocused, setIsFocused] = useState(false)
+  const [hasError, setHasError] = useState(false)
 
   const { data: tasks = [] } = useTasks(projectId)
   const create = useCreateTask(projectId)
@@ -48,13 +54,34 @@ export default function TasksPage() {
 
   const handleCreate = () => {
     const result = schema.safeParse(newTask)
-    if (!result.success) return console.log('Title is required')
+    if (!result.success) {
+      setHasError(true)
+      return
+    }
+    
+    setHasError(false)
     create.mutate(result.data, {
       onSuccess: () => {
         setNewTask({ title: '', notes: '' })
+        setIsFocused(false)
         console.log('Task added')
       }
     })
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleCreate()
+    }
+  }
+
+  const handleTitleChange = (e) => {
+    const value = e.target.value
+    setNewTask((t) => ({ ...t, title: value }))
+    if (hasError && value.trim()) {
+      setHasError(false)
+    }
   }
 
   const handleSave = (task, newTitle, newNotes) => {
@@ -68,48 +95,76 @@ export default function TasksPage() {
     })
   }
 
-  const sensors = useSensors(useSensor(PointerSensor))
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  )
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="space-y-6"
+      className="space-y-0.5 max-w-[700px] mx-auto mt-5 px-2"
     >
       {/* Add New Task */}
-      <div className="bg-white p-4 rounded-xl border shadow-sm">
-        <h2 className="text-lg font-semibold mb-2">Add New Task</h2>
-        <input
-          value={newTask.title}
-          onChange={(e) =>
-            setNewTask((t) => ({ ...t, title: e.target.value }))
-          }
-          placeholder="Title"
-          className="w-full mb-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg"
-        />
-        <textarea
-          value={newTask.notes}
-          onChange={(e) =>
-            setNewTask((t) => ({ ...t, notes: e.target.value }))
-          }
-          placeholder="Notes (optional)"
-          className="w-full mb-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg resize-none"
-          rows={2}
-        />
-        <button
-          onClick={handleCreate}
-          className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition"
-        >
-          Add Task
-        </button>
+      <div className='mb-4'>
+        <div className="relative">
+          <input
+            value={newTask.title}
+            onChange={handleTitleChange}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => {
+              setTimeout(() => {
+                if (!newTask.title.trim() && !newTask.notes.trim()) {
+                  setIsFocused(false)
+                }
+              }, 150)
+            }}
+            onKeyDown={handleKeyDown}
+            placeholder={hasError ? "Title is required" : "Add a task"}
+            className={`w-full bg-gradient-backdropy backdrop-blur-[24px] text-white px-4 py-2.5 border-none rounded-sm outline-none transition-all duration-200 ${
+              hasError 
+                ? 'placeholder-red-400 border border-red-500' 
+                : ''
+            } ${
+              isFocused
+                ? 'rounded-b-none'
+                : 'rounded-b-sm'
+            }`}
+          />
+          
+          <AnimatePresence>
+            {isFocused && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden"
+              >
+                <input
+                  value={newTask.notes}
+                  onChange={(e) => setNewTask((t) => ({ ...t, notes: e.target.value }))}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Add notes (optional)"
+                  className="w-full px-4 py-1 bg-gradient-backdropy backdrop-blur-[24px] text-white rounded-sm rounded-t-none outline-none resize-none transition-colors duration-200 border-t border-white/50"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Task List */}
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
+        modifiers={[restrictToVerticalAxis, restrictToParentElement]}
         onDragEnd={({ active, over }) => {
-          if (active.id !== over?.id) {
+          if (active.id !== over?.id && over) {
             const oldIndex = orderedTasks.findIndex((t) => t.id === active.id)
             const newIndex = orderedTasks.findIndex((t) => t.id === over.id)
             setOrderedTasks(arrayMove(orderedTasks, oldIndex, newIndex))
@@ -158,7 +213,7 @@ function SortableTaskItem({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.4 : 1
+    opacity: isDragging ? 0.6 : 1
   }
 
   const isEditing = editingId === task.id
@@ -173,18 +228,18 @@ function SortableTaskItem({
   }, [isEditing, task])
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} className="mb-3">
+    <div ref={setNodeRef} style={style} {...attributes} className="mb-3 text-white outline-none border-none">
       <motion.div
         layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="bg-white rounded-xl shadow-sm border p-4 transition-all duration-200 hover:shadow-lg"
+        className="bg-gradient-backdropy backdrop-blur-[24px] rounded-sm shadow-sm p-2 transition-all duration-200 hover:shadow-lg"
       >
         <div className="flex items-start gap-3">
           <div
             {...listeners}
-            className="mt-1 text-gray-400 hover:text-sky-500 cursor-grab active:cursor-grabbing select-none"
+            className="mt-1 hover:text-sky-500 cursor-grab active:cursor-grabbing select-none"
           >
             <GripVertical size={18} />
           </div>
@@ -222,30 +277,32 @@ function SortableTaskItem({
               </>
             ) : (
               <>
-                <h3 className="font-medium text-gray-900 mb-1">{task.title}</h3>
+                <h3 className="font-medium mb-1">{task.title}</h3>
                 {task.notes && (
-                  <p className="text-sm text-gray-600">{task.notes}</p>
+                  <p className="text-sm text-white/70">{task.notes}</p>
                 )}
               </>
             )}
           </div>
 
+          {/* delete & edit btn */}
           {!isEditing && (
-            <div className="flex gap-1">
+            <div className="flex gap-1 self-center">
               <button
                 onClick={() => setEditingId(task.id)}
-                className="p-2 text-gray-400 hover:text-sky-500 hover:bg-sky-50 rounded-lg"
+                className="p-2 text-white hover:bg-white/20 rounded-md"
               >
                 <Edit3 size={16} />
               </button>
               <button
                 onClick={handleDelete}
-                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg"
+                className="p-2 text-white hover:bg-red-500/20 hover:text-red-500 rounded-md"
               >
                 <Trash2 size={16} />
               </button>
             </div>
           )}
+
         </div>
       </motion.div>
     </div>
