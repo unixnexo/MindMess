@@ -31,10 +31,7 @@ export default function GridCard({ projects }) {
     };
 
     const getProgressColor = (progress) => {
-        if (progress === 0) return 'bg-gray-200';
-        if (progress < 30) return 'bg-red-400';
-        if (progress < 70) return 'bg-yellow-400';
-        return 'bg-green-400';
+        return progress === 100 ? 'bg-green-500' : 'bg-main-blue/90';
     };
 
     // edit
@@ -136,7 +133,7 @@ export default function GridCard({ projects }) {
                             <div className="mb-4">
                                 <div className="flex items-center justify-between mb-2">
                                     <span className="text-xs font-medium text-white/80">Progress</span>
-                                    <span className="text-xs font-medium text-white/80">{project.progress}%</span>
+                                    <span className="text-xs font-medium text-white/80">{Math.round(parseFloat(project.progress))}%</span>
                                 </div>
                                 <div className="w-full bg-white/80 rounded-full h-2">
                                     <div

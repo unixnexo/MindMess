@@ -52,7 +52,8 @@ const DrawingPage = () => {
   })
 
   useEffect(() => {
-    if (error) {
+    // Only show error for non-404 errors
+    if (error && error?.status !== 404 && error?.response?.status !== 404) {
       setShowLoadErrorAlert(true)
     }
   }, [error])
