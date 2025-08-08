@@ -28,6 +28,8 @@ import {
   useUpdateTask,
   useDeleteTask
 } from '../../features/task/useTasks'
+import { useProject } from "../../features/project/project.api"
+
 
 const schema = z.object({
   title: z.string().min(1),
@@ -42,7 +44,9 @@ export default function TasksPage() {
   const [orderedTasks, setOrderedTasks] = useState([])
   const [isFocused, setIsFocused] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
 
+  const { data: project, isLoading } = useProject(projectId)
   const { data: tasks = [] } = useTasks(projectId)
   const create = useCreateTask(projectId)
   const update = useUpdateTask(projectId)
@@ -109,8 +113,45 @@ export default function TasksPage() {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-0.5 max-w-[700px] mx-auto mt-5 px-2"
     >
+      {/* project detail */}
+      {project && (
+        <div className="mb-4 rounded-lg overflow-hidden bg-gradient-backdropy backdrop-blur-[24px] text-white shadow-sm">
+          <div className="p-4">
+            <div className="flex items-center justify-between">
+              <h1 className="text-md">{project.title}</h1>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-white/70">{project.progress}%</span>
+                <button
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="p-1 text-white/70 hover:text-white transition-all duration-200 hover:bg-white/20 rounded-lg"
+                >
+                  <svg
+                    className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+              }`}>
+              <div className="pt-4 border-t border-gray-100">
+                <p className="text-sm leading-relaxed mb-3">{project.description}</p>
+                <div className="text-xs text-white/70 font-medium">
+                  {new Date(project.startDate).toLocaleDateString()} — {new Date(project.endDate).toLocaleDateString()}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Add New Task */}
-      <div className='mb-4'>
+      <div className='pb-3'>
         <div className="relative">
           <input
             value={newTask.title}
@@ -125,14 +166,14 @@ export default function TasksPage() {
             }}
             onKeyDown={handleKeyDown}
             placeholder={hasError ? "Title is required" : "Add a task"}
-            className={`w-full bg-gradient-backdropy backdrop-blur-[24px] text-white px-4 py-2.5 border-none rounded-sm outline-none transition-all duration-200 ${
+            className={`w-full bg-gradient-backdropy backdrop-blur-[24px] text-white px-4 py-2.5 border-none rounded-lg outline-none transition-all duration-200 ${
               hasError 
                 ? 'placeholder-red-400 border border-red-500' 
                 : ''
             } ${
               isFocused
                 ? 'rounded-b-none'
-                : 'rounded-b-sm'
+                : 'rounded-b-lg'
             }`}
           />
           
@@ -150,7 +191,7 @@ export default function TasksPage() {
                   onChange={(e) => setNewTask((t) => ({ ...t, notes: e.target.value }))}
                   onKeyDown={handleKeyDown}
                   placeholder="Add notes (optional)"
-                  className="w-full px-4 py-1 bg-gradient-backdropy backdrop-blur-[24px] text-white rounded-sm rounded-t-none outline-none resize-none transition-colors duration-200 border-t border-white/50"
+                  className="w-full px-4 py-1 bg-gradient-backdropy backdrop-blur-[24px] text-white rounded-lg rounded-t-none outline-none resize-none transition-colors duration-200 border-t border-white/50"
                 />
               </motion.div>
             )}
@@ -190,6 +231,14 @@ export default function TasksPage() {
           ))}
         </SortableContext>
       </DndContext>
+
+      {/* no tasks */}
+      {tasks.length === 0 && (
+        <div className="text-center py-12 text-white/80">
+          <p className="text-sm">No tasks yet</p>
+        </div>
+      )}
+
     </motion.div>
   )
 }
@@ -234,7 +283,7 @@ function SortableTaskItem({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="bg-gradient-backdropy backdrop-blur-[24px] rounded-sm shadow-sm p-2 transition-all duration-200 hover:shadow-lg"
+        className="bg-gradient-backdropy backdrop-blur-[24px] rounded-lg shadow-sm p-2 transition-all duration-200 hover:shadow-lg"
       >
         <div className="flex items-start gap-3">
           <div
@@ -296,7 +345,7 @@ function SortableTaskItem({
               </button>
               <button
                 onClick={handleDelete}
-                className="p-2 text-white hover:bg-red-500/20 hover:text-red-500 rounded-md"
+                className="p-2 text-white hover:bg-red/20 hover:text-red rounded-md"
               >
                 <Trash2 size={16} />
               </button>

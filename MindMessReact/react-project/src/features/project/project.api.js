@@ -8,6 +8,13 @@ export const useProjects = () => {
   });
 };
 
+export const useProject = (id) => {
+  return useQuery({
+    queryKey: ['projects', id],
+    queryFn: () => api.get(`/projects/${id}`).then(res => res.data)
+  });
+};
+
 export const useCreateProject = () => {
   const queryClient = useQueryClient();
 
