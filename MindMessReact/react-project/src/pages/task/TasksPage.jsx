@@ -18,7 +18,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { GripVertical, Edit3, Trash2, Check, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { z } from 'zod'
 
@@ -111,11 +111,11 @@ export default function TasksPage() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="space-y-0.5 max-w-[700px] mx-auto mt-5 px-2"
+      className="space-y-0.5 max-w-[700px] mx-auto mt-5 px-2 mb-6"
     >
       {/* project detail */}
       {project && (
-        <div className="mb-4 rounded-lg overflow-hidden bg-gradient-backdropy backdrop-blur-[24px] text-white shadow-sm">
+        <div className="rounded-lg overflow-hidden bg-gradient-backdropy backdrop-blur-[24px] text-white shadow-sm">
           <div className="p-4">
             <div className="flex items-center justify-between">
               <h1 className="text-md">{project.title}</h1>
@@ -168,7 +168,7 @@ export default function TasksPage() {
             placeholder={hasError ? "Title is required" : "Add a task"}
             className={`w-full bg-gradient-backdropy backdrop-blur-[24px] text-white px-4 py-2.5 border-none rounded-lg outline-none transition-all duration-200 ${
               hasError 
-                ? 'placeholder-red-400 border border-red-500' 
+                ? 'placeholder-red' 
                 : ''
             } ${
               isFocused
@@ -279,7 +279,6 @@ function SortableTaskItem({
   return (
     <div ref={setNodeRef} style={style} {...attributes} className="mb-3 text-white outline-none border-none">
       <motion.div
-        layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
@@ -293,33 +292,35 @@ function SortableTaskItem({
             <GripVertical size={18} />
           </div>
 
+          {/* editing */}
           <div className="flex-1 min-w-0">
             {isEditing ? (
               <>
                 <input
                   value={localTitle}
+                  placeholder='title'
                   onChange={(e) => setLocalTitle(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg"
+                  className="w-full px-3 py-0.5 bg-white/20 outline-none border-none rounded-lg"
                 />
-                <textarea
+                <input
                   value={localNotes}
+                  placeholder='description'
                   onChange={(e) => setLocalNotes(e.target.value)}
-                  className="w-full mt-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg resize-none"
-                  rows={2}
+                  className="w-full mt-2 px-3 py-0.5 bg-white/20 outline-none border-none rounded-lg resize-none"
                 />
                 <div className="flex gap-2 mt-2">
                   <button
                     onClick={() => handleSave(task, localTitle, localNotes)}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-sky-500 text-white rounded-lg text-sm"
+                    className="flex items-center justify-center gap-1 w-20 py-1 bg-main-blue hover:bg-main-blue/70 text-white rounded-lg text-xs transition-colors"
                   >
-                    <Check size={14} />
+                    <Check size={12} />
                     Save
                   </button>
                   <button
                     onClick={() => setEditingId(null)}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-gray-500 text-white rounded-lg text-sm"
+                    className="flex items-center justify-center gap-1 w-20 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs transition-colors"
                   >
-                    <X size={14} />
+                    <X size={12} />
                     Cancel
                   </button>
                 </div>
@@ -357,3 +358,5 @@ function SortableTaskItem({
     </div>
   )
 }
+
+
