@@ -1,2 +1,1 @@
 - auto save canvas
-- the auth expiration still sucks

@@ -20,7 +20,7 @@ const VerifyPage = () => {
 
     verifyMagicToken(token)
       .then((res) => {
-        login(res.user, token); // save user + token
+        login(res.user, res.token); // save user + token
         navigate('/app/'); // redirect to homepage
       })
       .catch((err) => {
