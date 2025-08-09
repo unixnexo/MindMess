@@ -19,14 +19,14 @@ namespace MindMess.Services.Tasks
         public async Task<List<TaskResponseDto>> GetAll(Guid projectId, Guid userId)
         {
             var tasks = await _repo.GetAllByProjectAsync(projectId, userId);
-            return tasks.Select(t => new TaskResponseDto(t.Id, t.Title, t.Notes, t.Status, t.ProjectId)).ToList();
+            return tasks.Select(t => new TaskResponseDto(t.Id, t.Title, t.Notes, t.Status, t.Position, t.ProjectId)).ToList();
         }
 
         public async Task<TaskResponseDto?> Get(Guid id, Guid userId)
         {
             var t = await _repo.GetByIdAsync(id, userId);
             if (t == null) return null;
-            return new TaskResponseDto(t.Id, t.Title, t.Notes, t.Status, t.ProjectId);
+            return new TaskResponseDto(t.Id, t.Title, t.Notes, t.Status, t.Position, t.ProjectId);
         }
 
         public async Task<TaskResponseDto> Create(Guid projectId, Guid userId, CreateTaskDto dto)
@@ -34,15 +34,19 @@ namespace MindMess.Services.Tasks
             var p = await _projectRepo.GetByIdAsync(projectId, userId);
             if (p == null) throw new Exception("Not your project.");
 
+            // Get max position and add 1
+            var maxPosition = await _repo.GetMaxPositionAsync(projectId, userId);
+
             var task = new TaskItem
             {
                 Title = dto.Title,
                 Notes = dto.Notes,
-                ProjectId = projectId
+                ProjectId = projectId,
+                Position = maxPosition + 1
             };
             await _repo.AddAsync(task);
             await _repo.SaveAsync();
-            return new TaskResponseDto(task.Id, task.Title, task.Notes, task.Status, task.ProjectId);
+            return new TaskResponseDto(task.Id, task.Title, task.Notes, task.Status, task.Position, task.ProjectId);
         }
 
         public async Task<bool> Update(Guid id, Guid userId, UpdateTaskDto dto)
@@ -53,6 +57,7 @@ namespace MindMess.Services.Tasks
             t.Title = dto.Title;
             t.Notes = dto.Notes;
             t.Status = dto.Status;
+            if (dto.Position.HasValue) t.Position = dto.Position.Value;
             await _repo.SaveAsync();
             return true;
         }

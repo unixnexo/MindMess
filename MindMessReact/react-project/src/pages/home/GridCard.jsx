@@ -9,7 +9,7 @@ import EditCardForm from "./EditCardForm";
 import { Link } from "react-router-dom";
 
 
-export default function GridCard({ projects }) {
+export default function GridCard({ projects = [] }) {
 
     const [showErrorAlert, setShowErrorAlert] = useState(false);
     const [editingProjectId, setEditingProjectId] = useState(null);

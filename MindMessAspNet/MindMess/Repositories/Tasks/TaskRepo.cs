@@ -12,6 +12,7 @@ namespace MindMess.Repositories.Tasks
         public Task<List<TaskItem>> GetAllByProjectAsync(Guid projectId, Guid userId) =>
             _db.Tasks
                 .Where(t => t.ProjectId == projectId && t.Project.UserId == userId)
+                .OrderBy(t => t.Position)
                 .ToListAsync();
 
         public Task<TaskItem?> GetByIdAsync(Guid id, Guid userId) =>
@@ -19,9 +20,18 @@ namespace MindMess.Repositories.Tasks
                 .Include(t => t.Project)
                 .FirstOrDefaultAsync(t => t.Id == id && t.Project.UserId == userId);
 
+        public async Task<int> GetMaxPositionAsync(Guid projectId, Guid userId)
+        {
+            var maxPos = await _db.Tasks
+                .Where(t => t.ProjectId == projectId && t.Project.UserId == userId)
+                .MaxAsync(t => (int?)t.Position);
+            return maxPos ?? -1;
+        }
+
         public Task AddAsync(TaskItem task) => _db.Tasks.AddAsync(task).AsTask();
         public Task DeleteAsync(TaskItem task) { _db.Tasks.Remove(task); return Task.CompletedTask; }
         public Task SaveAsync() => _db.SaveChangesAsync();
+       
     }
 
 }
