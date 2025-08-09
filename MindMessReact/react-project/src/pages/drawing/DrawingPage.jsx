@@ -208,6 +208,29 @@ const DrawingPage = () => {
     })
   }
 
+  const handleTouchStart = (e) => {
+    if (e.evt.touches.length === 1) {
+      // Single touch - draw
+      const stage = stageRef.current
+      const touch = e.evt.touches[0]
+      const pointer = { x: touch.clientX, y: touch.clientY }
+      const transform = stage.getAbsoluteTransform().copy().invert()
+      const pos = transform.point(pointer)
+
+      setIsDrawing(true)
+      stage.draggable(false)
+
+      const newLine = {
+        tool: eraserMode ? 'eraser' : 'pen',
+        stroke: eraserMode ? '#ffffff' : strokeColor,
+        strokeWidth,
+        points: [pos.x, pos.y],
+      }
+
+      setLines((prevLines) => [...prevLines, newLine])
+    }
+  }
+
   const handleTouchMove = (e) => {
     if (e.evt.touches.length === 2) {
       const [touch1, touch2] = e.evt.touches
@@ -224,10 +247,34 @@ const DrawingPage = () => {
       }
 
       setLastDist(dist)
+    } else if (e.evt.touches.length === 1 && isDrawing) {
+      // Single touch - draw
+      const stage = stageRef.current
+      const touch = e.evt.touches[0]
+      const pointer = { x: touch.clientX, y: touch.clientY }
+      const transform = stage.getAbsoluteTransform().copy().invert()
+      const pos = transform.point(pointer)
+
+      setLines((prevLines) => {
+        if (prevLines.length === 0) return prevLines
+
+        const lastLine = prevLines[prevLines.length - 1]
+        const updatedLine = {
+          ...lastLine,
+          points: [...lastLine.points, pos.x, pos.y],
+        }
+
+        return [...prevLines.slice(0, -1), updatedLine]
+      })
     }
   }
 
   const handleTouchEnd = () => {
+    if (isDrawing) {
+      addToHistory([...lines])
+      setIsDrawing(false)
+      stageRef.current.draggable(true)
+    }
     setLastDist(null)
   }
 
@@ -250,9 +297,9 @@ const DrawingPage = () => {
   return (
     <div className={`fixed inset-0 bg-white overflow-hidden *:select-none ${isFullscreen ? 'top-0' : 'top-11'}`}>
       {/* Top Toolbar */}
-      <div className={`absolute left-1/2 transform -translate-x-1/2 z-10 ${isFullscreen ? 'top-0' : 'top-4'}`}>
-        <div className="bg-white/90 backdrop-blur-xl rounded-2xl px-6 py-3 shadow-lg border border-gray-200/50">
-          <div className="flex items-center gap-4">
+      <div className={`absolute left-1/2 transform -translate-x-1/2 w-full md:w-auto px-2 md:px-0 z-10 ${isFullscreen ? 'top-0' : 'top-4'}`}>
+        <div className="bg-white/90 hide-scrollbar overflow-x-auto md:overflow-visible backdrop-blur-xl rounded-2xl px-6 py-3 shadow-lg border border-gray-200/50">
+          <div className="flex items-center gap-2 sm:gap-4">
             <button
               onClick={() => setIsFullscreen(!isFullscreen)}
               className="p-1.5 text-gray-600 hover:bg-gray-100 rounded-lg"
@@ -357,6 +404,7 @@ const DrawingPage = () => {
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
+          onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           style={{ background: '#fff', cursor: isDrawing ? 'crosshair' : 'default' }}

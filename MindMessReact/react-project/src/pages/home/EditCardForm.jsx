@@ -44,8 +44,8 @@ export default function EditCardForm({ project, onSave, onCancel, isUpdating }) 
     }
 
     return (
-        <div className="h-[196px] bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-[24px] rounded-xl p-6 shadow-2xl border-2 border-blue-400/30">
-            <form onSubmit={handleSubmit}>
+        <div className="h-[208px] bg-gradient-to-br from-gray-900/60 to-black/20 backdrop-blur-[24px] rounded-xl p-3 xs:p-4 lg:p-6 shadow-2xl">
+            <form onSubmit={handleSubmit} className='flex flex-col justify-between h-full'>
                 <div className="mb-4">
                     <input 
                         type="text" 
@@ -70,7 +70,8 @@ export default function EditCardForm({ project, onSave, onCancel, isUpdating }) 
                     />
                 </div>
 
-                <div className="flex items-center justify-between mb-4">
+                <div>
+                <div className="flex items-center justify-between mb-4 space-x-1">
                     <input 
                         type="date" 
                         value={formData.startDate}
@@ -109,6 +110,7 @@ export default function EditCardForm({ project, onSave, onCancel, isUpdating }) 
                     >
                         Cancel
                     </button>
+                </div>
                 </div>
             </form>
         </div>

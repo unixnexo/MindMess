@@ -108,7 +108,7 @@ export default function GridCard({ projects }) {
                             />
                         ) : (
                         <Link to={`project/${project.id}/tasks`} key={project.id}>
-                        <div className="flex flex-col justify-between h-full min-h-[208px] bg-gradient-backdropy backdrop-blur-[24px] hover:backdrop-blur-[100px] rounded-lg p-3 xs:p-4 lg:p-6 shadow-2xl cursor-pointer transition-all duration-300">
+                        <div className="flex flex-col justify-between h-[208px] bg-gradient-backdropy backdrop-blur-[24px] hover:backdrop-blur-[100px] rounded-lg p-3 xs:p-4 lg:p-6 shadow-2xl cursor-pointer transition-all duration-300">
                             {/* Header */}
                             <div className="mb-4">
                                 <div className="flex justify-between items-start">

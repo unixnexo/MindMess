@@ -11,7 +11,7 @@ export default {
         "hover": "#0000000d",
         "secondary-white": "#f0f0f0",
         "border": "#C7C7C7",
-        "red": "#FA586A",
+        "red": "#F06B7A",
       },
       screens: {
         "xs": "400px",

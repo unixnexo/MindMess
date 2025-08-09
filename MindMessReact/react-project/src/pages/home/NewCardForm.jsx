@@ -23,7 +23,7 @@ export default function NewCardForm({ onSave, onCancel, isCreating }) {
     const [formData, setFormData] = useState({
         title: '',
         description: '',
-        startDate: '',
+        startDate: new Date().toISOString().split('T')[0],
         endDate: ''
     });
 
@@ -44,8 +44,8 @@ export default function NewCardForm({ onSave, onCancel, isCreating }) {
     }
 
     return (
-        <div className="h-[196px] bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-[24px] rounded-xl p-6 shadow-2xl border-2 border-blue-400/30">
-            <form onSubmit={handleSubmit}>
+        <div className="h-[208px] bg-gradient-to-br from-gray-900/60 to-black/20 backdrop-blur-[24px] rounded-xl p-3 xs:p-4 lg:p-6 shadow-2xl">
+            <form onSubmit={handleSubmit} className='flex flex-col justify-between h-full'>
                 <div className="mb-4">
                     <input 
                         type="text" 
@@ -70,6 +70,7 @@ export default function NewCardForm({ onSave, onCancel, isCreating }) {
                     />
                 </div>
 
+                <div>
                 <div className="flex items-center justify-between mb-4">
                     <input 
                         type="date" 
@@ -109,6 +110,7 @@ export default function NewCardForm({ onSave, onCancel, isCreating }) {
                     >
                         Cancel
                     </button>
+                </div>
                 </div>
             </form>
         </div>
