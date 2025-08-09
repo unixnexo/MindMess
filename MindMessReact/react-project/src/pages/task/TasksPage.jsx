@@ -47,6 +47,8 @@ export default function TasksPage() {
   const [hasError, setHasError] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
 
+  const inputRef = useRef(null)
+
   const { data: project, isLoading } = useProject(projectId)
   const { data: tasks = [] } = useTasks(projectId)
   const create = useCreateTask(projectId)
@@ -68,8 +70,7 @@ export default function TasksPage() {
     create.mutate(result.data, {
       onSuccess: () => {
         setNewTask({ title: '', notes: '' })
-        setIsFocused(false)
-        console.log('Task added')
+        inputRef.current?.focus()
       }
     })
   }
@@ -95,7 +96,6 @@ export default function TasksPage() {
     update.mutate({ id: task.id, ...result.data }, {
       onSuccess: () => {
         setEditingId(null)
-        console.log('Task updated')
       }
     })
   }
@@ -174,6 +174,7 @@ export default function TasksPage() {
       <div className='pb-3'>
         <div className="relative">
           <input
+            ref={inputRef}
             value={newTask.title}
             onChange={handleTitleChange}
             onFocus={() => setIsFocused(true)}
