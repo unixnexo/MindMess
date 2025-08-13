@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     const loadFont = async () => {
       try {
-        const font = new FontFace('WinkyRough', 'url(/fonts/WinkyRough-Regular.woff2)');
+        const font = new FontFace('WinkyRough', 'url(./fonts/WinkyRough-Regular.woff2)');
         await font.load();
         document.fonts.add(font);
         setFontsLoaded(true);

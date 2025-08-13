@@ -1,4 +1,4 @@
-/* @import url('./fonts.css'); */
+@import url('./fonts.css');
 
 @tailwind base;
 @tailwind components;
@@ -22,7 +22,7 @@
 
 /* base */
 html, body, * {
-    /* font-family: "WinkyRough", sans-serif; */
+    font-family: "WinkyRough", sans-serif;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
