@@ -1,0 +1,88 @@
+@import url('./fonts.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .btn-default {
+        @apply bg-main-blue text-white hover:brightness-105 px-6 py-3 rounded-3xl;
+    }
+
+    .input-default {
+        @apply w-full px-3 py-1 border border-gray-300 rounded-lg text-base focus:outline-none focus:border-blue-500;
+    }
+    .text-muted {
+        @apply text-black/50;
+    }
+    .menubar-item {
+        @apply px-2.5 py-1 text-sm hover:bg-hover ring-0 outline-0 h-[32px];
+    }
+}
+
+/* base */
+html, body, * {
+    font-family: "WinkyRough", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root, body, html {
+    overflow: hidden !important;
+    position: relative;
+}
+
+.max-1600 {
+    max-width: 1600px !important;
+    margin: 0 auto;
+}
+
+button:disabled {
+    cursor: not-allowed !important;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .radix-scrollbar {
+    display: none;
+  }
+}
+
+.hide-scrollbar {
+ -ms-overflow-style: none;  /* Internet Explorer 10+ */
+ scrollbar-width: none;  /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar { 
+ display: none;  /* Safari and Chrome */
+}
+/*  */
+
+
+/* backgrounds */
+.bg-gradient {
+    background-image: url('/wallpaper.svg');
+    background-size: cover;
+    background-position: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: #5ba0ff; /* impo for apple */
+}
+
+.bg-gradient::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(64deg, #5ba0ff, #1a8eff 46%, #2d7eeb);
+    mix-blend-mode: hard-light;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bg-gradient-backdropy {
+    background: radial-gradient(circle at 97% 3.3%, rgba(0, 0, 0, .35) 0, rgba(0, 0, 0, .6) 164%);
+}
+
