@@ -59,7 +59,7 @@ function AuthPage() {
             <Drawings startAnimation={startAnimation} />
             
             <div className="flex flex-col items-center justify-center space-y-[30px]">
-                <img src="/logo.webp" className="w-[70%] xs:w-auto" alt="MindMess Logo" />
+                <img src="./logo.webp" className="w-[70%] xs:w-auto" alt="MindMess Logo" />
 
                 <div className="text-center leading-tight">
 
