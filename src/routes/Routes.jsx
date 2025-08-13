@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import AuthPage from '../pages/auth/AuthPage';
 import Layout from "../components/layout/Layout";
@@ -9,7 +9,7 @@ import DrawingPage from '../pages/drawing/DrawingPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import TasksPage from '../pages/task/TasksPage';
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
 
   // app (home, drawing, task)
   {
