@@ -10,7 +10,12 @@ const VerifyPage = () => {
   const login = useAuth((s) => s.login);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    // const params = new URLSearchParams(window.location.search);
+    // const token = params.get('token');
+
+    const hash = window.location.hash; // "#/auth/verify?token=abc123" - coz of gh pages
+    const queryString = hash.split('?')[1];
+    const params = new URLSearchParams(queryString);
     const token = params.get('token');
 
     if (!token) {
