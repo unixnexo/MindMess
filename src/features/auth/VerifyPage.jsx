@@ -32,7 +32,7 @@ const VerifyPage = () => {
     <div className="p-2 flex justify-center items-center h-screen">
       {error ? (
         <div className='text-center space-y-5'>
-          <img width="150" src="/useBrain.webp" alt="meme picture" />
+          <img width="150" src="./useBrain.webp" alt="meme picture" />
           <p className="text-red">{error}</p>
         </div>
       ) : (
