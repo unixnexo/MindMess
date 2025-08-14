@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://mindmess.runasp.net/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://mindmess.runasp.net/api',
   withCredentials: false,
   headers: {
     'Content-Type': 'application/json',
