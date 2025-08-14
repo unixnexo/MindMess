@@ -378,7 +378,7 @@ function SortableTaskItem({
               </>
             ) : (
               <>
-                <h3 className={`font-medium mb-1 ${isDone ? 'line-through text-white/60' : ''}`}>
+                <h3 className={`font-medium ${isDone ? 'line-through text-white/60' : ''}`}>
                   {task.title}
                 </h3>
                 {task.notes && (
