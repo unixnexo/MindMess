@@ -13,8 +13,9 @@ const VerifyPage = () => {
     // const params = new URLSearchParams(window.location.search);
     // const token = params.get('token');
 
-    const location = useLocation();
-    const params = new URLSearchParams(location.search);
+    const hash = window.location.hash; // "#/auth/verify?token=abc123"
+    const queryString = hash.split('?')[1];
+    const params = new URLSearchParams(queryString);
     const token = params.get('token');
 
     if (!token) {
