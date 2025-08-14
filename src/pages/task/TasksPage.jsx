@@ -162,7 +162,7 @@ export default function TasksPage() {
               <div className="pt-4 border-t border-gray-100">
                 <p className="text-sm leading-relaxed mb-3">{project.description}</p>
                 <div className="text-xs text-white/70 font-medium">
-                  {new Date(project.startDate).toLocaleDateString()} — {new Date(project.endDate).toLocaleDateString()}
+                  {new Date(project.startDate).toLocaleDateString()} {project.endDate && ` — ${new Date(project.endDate).toLocaleDateString()}`}
                 </div>
               </div>
             </div>
