@@ -7,6 +7,9 @@ import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
 
+    // user
+    const user = useAuth((state) => state.user)
+
     // logout
     const logout = useAuth(state => state.logout);
 
@@ -47,7 +50,7 @@ function Header() {
                     }
                 >
                     <Menubar.Item className="menubar-item border-b border-border bg-hover">
-                        <p>unixnexo@gmail.com</p>
+                        <p>{user}</p>
                     </Menubar.Item>
                     <Menubar.Item className="menubar-item cursor-pointer" onClick={logout}>
                         <div className='flex items-center justify-between text-red fill-red'>

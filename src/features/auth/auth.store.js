@@ -1,12 +1,21 @@
 import { create } from 'zustand';
 
+const getUserFromToken = (token) => {
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.email;
+  } catch {
+    return null;
+  }
+};
+
 export const useAuth = create((set) => {
-    
-  // try to load from localStorage on init
   const token = localStorage.getItem('token');
+  const user = getUserFromToken(token);
 
   return {
-    user: null,
+    user,
     token,
 
     login: (user, token) => {
